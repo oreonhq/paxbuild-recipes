@@ -29,7 +29,7 @@ dependencies:
 build:
   build_system: Make
   build_commands:
-    - "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF"
+    - "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_LINK_WHAT_YOU_USE=OFF"
     - "cmake --build build -j$(nproc)"
   build_dependencies:
     - "gcc-c++"
