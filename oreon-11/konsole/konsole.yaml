@@ -18,24 +18,119 @@ dependencies:
   build_dependencies:
     - {name: "gcc-c++", version_constraint: ">=11", optional: false}
     - {name: "cmake", version_constraint: ">=3.16", optional: false}
+    - {name: "ninja", version_constraint: ">=1.10", optional: false}
     - {name: "extra-cmake-modules", version_constraint: ">=6.0", optional: false}
     - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-multimedia", version_constraint: ">=6.7", optional: false}
+    - {name: "libicu", version_constraint: ">=70", optional: false}
+    - {name: "pcre2", version_constraint: ">=10.30", optional: false}
+
+    # KDE Frameworks 6 (Konsole 25.08.3)
+    - {name: "kf6-kbookmarks", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kconfig", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kconfigwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kcoreaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kcrash", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kdbusaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kglobalaccel", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kguiaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-ki18n", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kiconthemes", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kio", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kjobwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knewstuff", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knotifications", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knotifyconfig", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kparts", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kpty", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kservice", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-ktextwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kwidgetsaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kwindowsystem", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kxmlgui", version_constraint: ">=6.0", optional: false}
+
+    # Docs/tools (often pulled even if BUILD_TESTING=OFF)
+    - {name: "kf6-kdoctools", version_constraint: ">=6.0", optional: false}
+
+    # Icons (runtime-relevant but commonly present at build time too)
+    - {name: "breeze-icons", version_constraint: ">=6.0", optional: false}
+
   runtime_dependencies:
     - {name: "glibc", version_constraint: ">=2.30", optional: false}
     - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-multimedia", version_constraint: ">=6.7", optional: false}
+    - {name: "libicu", version_constraint: ">=70", optional: false}
+    - {name: "pcre2", version_constraint: ">=10.30", optional: false}
+
+    # KDE Frameworks 6 runtime libs
+    - {name: "kf6-kbookmarks", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kconfig", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kconfigwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kcoreaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kcrash", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kdbusaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kglobalaccel", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kguiaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-ki18n", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kiconthemes", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kio", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kjobwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knewstuff", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knotifications", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-knotifyconfig", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kparts", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kpty", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kservice", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-ktextwidgets", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kwidgetsaddons", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kwindowsystem", version_constraint: ">=6.0", optional: false}
+    - {name: "kf6-kxmlgui", version_constraint: ">=6.0", optional: false}
+
+    # Icons
+    - {name: "breeze-icons", version_constraint: ">=6.0", optional: false}
+    - {name: "oxygen-icons", version_constraint: ">=6.0", optional: true}
+
   optional_dependencies: []
   conflicts: []
 
 build:
   build_system: Make
   build_commands:
-    - "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_LINK_WHAT_YOU_USE=OFF"
+    - "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF"
     - "cmake --build build -j$(nproc)"
   build_dependencies:
     - "gcc-c++"
     - "cmake"
+    - "ninja"
     - "extra-cmake-modules"
     - "qt6-base"
+    - "qt6-multimedia"
+    - "libicu"
+    - "pcre2"
+    - "kf6-kbookmarks"
+    - "kf6-kconfig"
+    - "kf6-kconfigwidgets"
+    - "kf6-kcoreaddons"
+    - "kf6-kcrash"
+    - "kf6-kdbusaddons"
+    - "kf6-kglobalaccel"
+    - "kf6-kguiaddons"
+    - "kf6-ki18n"
+    - "kf6-kiconthemes"
+    - "kf6-kio"
+    - "kf6-kjobwidgets"
+    - "kf6-knewstuff"
+    - "kf6-knotifications"
+    - "kf6-knotifyconfig"
+    - "kf6-kparts"
+    - "kf6-kpty"
+    - "kf6-kservice"
+    - "kf6-ktextwidgets"
+    - "kf6-kwidgetsaddons"
+    - "kf6-kwindowsystem"
+    - "kf6-kxmlgui"
+    - "kf6-kdoctools"
+    - "breeze-icons"
   build_flags: []
   environment:
     CXXFLAGS: "-O2 -pipe"
