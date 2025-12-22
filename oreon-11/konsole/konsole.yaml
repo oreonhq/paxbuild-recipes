@@ -87,6 +87,12 @@ dependencies:
   - name: kf6-kpty-devel
     version_constraint: null
     optional: false
+  - name: kf6-kdbusaddons-devel
+    version_constraint: null
+    optional: false
+  - name: kf6-kglobalaccel-devel
+    version_constraint: null
+    optional: false
   runtime_dependencies:
   - name: glibc
     version_constraint: '>=2.30'
@@ -154,6 +160,12 @@ dependencies:
   - name: kf6-kpty
     version_constraint: null
     optional: false
+  - name: kf6-kdbusaddons
+    version_constraint: null
+    optional: false
+  - name: kf6-kglobalaccel
+    version_constraint: null
+    optional: false
   optional_dependencies: []
   conflicts: []
 build:
@@ -186,6 +198,8 @@ build:
   - kf6-kparts-devel
   - kf6-kwidgetsaddons-devel
   - kf6-kpty-devel
+  - kf6-kdbusaddons-devel
+  - kf6-kglobalaccel-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe
