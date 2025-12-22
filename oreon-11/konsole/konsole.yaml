@@ -60,6 +60,30 @@ dependencies:
   - name: kwindowsystem
     version_constraint: null
     optional: false
+  - name: kbookmarks
+    version_constraint: null
+    optional: false
+  - name: kcrash
+    version_constraint: null
+    optional: false
+  - name: kguiaddons
+    version_constraint: null
+    optional: false
+  - name: ki18n
+    version_constraint: null
+    optional: false
+  - name: knewstuff
+    version_constraint: null
+    optional: false
+  - name: knotifyconfig
+    version_constraint: null
+    optional: false
+  - name: kparts
+    version_constraint: null
+    optional: false
+  - name: kwidgetsaddons
+    version_constraint: null
+    optional: false
   runtime_dependencies:
   - name: glibc
     version_constraint: '>=2.30'
@@ -100,6 +124,30 @@ dependencies:
   - name: kwindowsystem
     version_constraint: null
     optional: false
+  - name: kbookmarks
+    version_constraint: null
+    optional: false
+  - name: kcrash
+    version_constraint: null
+    optional: false
+  - name: kguiaddons
+    version_constraint: null
+    optional: false
+  - name: ki18n
+    version_constraint: null
+    optional: false
+  - name: knewstuff
+    version_constraint: null
+    optional: false
+  - name: knotifyconfig
+    version_constraint: null
+    optional: false
+  - name: kparts
+    version_constraint: null
+    optional: false
+  - name: kwidgetsaddons
+    version_constraint: null
+    optional: false
   optional_dependencies: []
   conflicts: []
 build:
@@ -123,6 +171,14 @@ build:
   - knotifications
   - kservice
   - kwindowsystem
+  - kbookmarks
+  - kcrash
+  - kguiaddons
+  - ki18n
+  - knewstuff
+  - knotifyconfig
+  - kparts
+  - kwidgetsaddons
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe
