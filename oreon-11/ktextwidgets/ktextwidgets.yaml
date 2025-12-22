@@ -24,16 +24,16 @@ dependencies:
   - name: gcc-c++
     version_constraint: '>=11'
     optional: false
-  - name: kconfig-devel
+  - name: kconfig
     version_constraint: null
     optional: false
-  - name: kcoreaddons-devel
+  - name: kcoreaddons
     version_constraint: null
     optional: false
-  - name: kservice-devel
+  - name: kservice
     version_constraint: null
     optional: false
-  - name: qt6-base-devel
+  - name: qt6-qtbase-devel
     version_constraint: '>=6.7'
     optional: false
   runtime_dependencies:
@@ -49,7 +49,7 @@ dependencies:
   - name: kservice
     version_constraint: null
     optional: false
-  - name: qt6-base
+  - name: qt6-qtbase
     version_constraint: '>=6.7'
     optional: false
   optional_dependencies: []
@@ -63,10 +63,10 @@ build:
   - cmake
   - extra-cmake-modules
   - gcc-c++
-  - kconfig-devel
-  - kcoreaddons-devel
-  - kservice-devel
-  - qt6-base-devel
+  - kconfig
+  - kcoreaddons
+  - kservice
+  - qt6-qtbase-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe

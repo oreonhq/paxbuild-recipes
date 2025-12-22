@@ -24,14 +24,14 @@ dependencies:
   - name: extra-cmake-modules
     version_constraint: '>=6.0'
     optional: false
-  - name: qt6-base-devel
+  - name: qt6-qtbase-devel
     version_constraint: '>=6.7'
     optional: false
   runtime_dependencies:
   - name: glibc
     version_constraint: '>=2.30'
     optional: false
-  - name: qt6-base
+  - name: qt6-qtbase
     version_constraint: '>=6.7'
     optional: false
   optional_dependencies: []
@@ -45,7 +45,7 @@ build:
   - gcc-c++
   - cmake
   - extra-cmake-modules
-  - qt6-base-devel
+  - qt6-qtbase-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe

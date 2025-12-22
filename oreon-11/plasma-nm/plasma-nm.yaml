@@ -24,31 +24,31 @@ dependencies:
   - name: gcc-c++
     version_constraint: '>=11'
     optional: false
-  - name: kconfig-devel
+  - name: kconfig
     version_constraint: null
     optional: false
-  - name: kcoreaddons-devel
+  - name: kcoreaddons
     version_constraint: null
     optional: false
-  - name: kiconthemes-devel
+  - name: kiconthemes
     version_constraint: null
     optional: false
-  - name: kio-devel
+  - name: kio
     version_constraint: null
     optional: false
-  - name: knotifications-devel
+  - name: knotifications
     version_constraint: null
     optional: false
-  - name: kservice-devel
+  - name: kservice
     version_constraint: null
     optional: false
-  - name: kxmlgui-devel
+  - name: kxmlgui
     version_constraint: null
     optional: false
-  - name: plasma-framework-devel
+  - name: plasma-framework
     version_constraint: null
     optional: false
-  - name: qt6-base-devel
+  - name: qt6-qtbase-devel
     version_constraint: '>=6.7'
     optional: false
   runtime_dependencies:
@@ -79,7 +79,7 @@ dependencies:
   - name: plasma-framework
     version_constraint: null
     optional: false
-  - name: qt6-base
+  - name: qt6-qtbase
     version_constraint: '>=6.7'
     optional: false
   optional_dependencies: []
@@ -93,15 +93,15 @@ build:
   - cmake
   - extra-cmake-modules
   - gcc-c++
-  - kconfig-devel
-  - kcoreaddons-devel
-  - kiconthemes-devel
-  - kio-devel
-  - knotifications-devel
-  - kservice-devel
-  - kxmlgui-devel
-  - plasma-framework-devel
-  - qt6-base-devel
+  - kconfig
+  - kcoreaddons
+  - kiconthemes
+  - kio
+  - knotifications
+  - kservice
+  - kxmlgui
+  - plasma-framework
+  - qt6-qtbase-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe
