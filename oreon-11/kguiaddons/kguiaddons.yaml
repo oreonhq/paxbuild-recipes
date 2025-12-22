@@ -1,11 +1,11 @@
 name: kguiaddons
-version: 6.20.0
+version: 6.21.0
 description: KGuiAddons - GUI utilities
 author: KDE Community
 license: LGPL-2.1-or-later
 homepage: https://kde.org/
 repository: ''
-source_url: https://download.kde.org/stable/frameworks/6.20/kguiaddons-6.20.0.tar.xz
+source_url: https://download.kde.org/stable/frameworks/6.21/kguiaddons-6.21.0.tar.xz
 keywords:
 - kguiaddons
 - kde
@@ -104,4 +104,3 @@ metadata:
   provides:
   - kguiaddons
   conflicts: []
-

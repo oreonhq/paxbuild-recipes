@@ -1,11 +1,11 @@
 name: ki18n
-version: 6.20.0
+version: 6.21.0
 description: KI18n - internationalization framework
 author: KDE Community
 license: LGPL-2.1-or-later
 homepage: https://kde.org/
 repository: ''
-source_url: https://download.kde.org/stable/frameworks/6.20/ki18n-6.20.0.tar.xz
+source_url: https://download.kde.org/stable/frameworks/6.21/ki18n-6.21.0.tar.xz
 keywords:
 - ki18n
 - kde
@@ -104,4 +104,3 @@ metadata:
   provides:
   - ki18n
   conflicts: []
-

@@ -1,11 +1,11 @@
 name: knewstuff
-version: 6.20.0
+version: 6.21.0
 description: KNewStuff - framework for downloading and sharing additional application data
 author: KDE Community
 license: LGPL-2.1-or-later
 homepage: https://kde.org/
 repository: ''
-source_url: https://download.kde.org/stable/frameworks/6.20/knewstuff-6.20.0.tar.xz
+source_url: https://download.kde.org/stable/frameworks/6.21/knewstuff-6.21.0.tar.xz
 keywords:
 - knewstuff
 - kde
@@ -125,4 +125,3 @@ metadata:
   provides:
   - knewstuff
   conflicts: []
-

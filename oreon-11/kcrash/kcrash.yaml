@@ -1,11 +1,11 @@
 name: kcrash
-version: 6.20.0
+version: 6.21.0
 description: KCrash - crash handler
 author: KDE Community
 license: LGPL-2.1-or-later
 homepage: https://kde.org/
 repository: ''
-source_url: https://download.kde.org/stable/frameworks/6.20/kcrash-6.20.0.tar.xz
+source_url: https://download.kde.org/stable/frameworks/6.21/kcrash-6.21.0.tar.xz
 keywords:
 - kcrash
 - kde
@@ -104,4 +104,3 @@ metadata:
   provides:
   - kcrash
   conflicts: []
-
