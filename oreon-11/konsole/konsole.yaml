@@ -24,22 +24,22 @@ dependencies:
   - name: gcc-c++
     version_constraint: '>=11'
     optional: false
-  - name: kconfig
+  - name: kf6-kconfig-devel
     version_constraint: null
     optional: false
-  - name: kcoreaddons
+  - name: kf6-kcoreaddons-devel
     version_constraint: null
     optional: false
-  - name: kiconthemes
+  - name: kf6-kiconthemes-devel
     version_constraint: null
     optional: false
-  - name: kio
+  - name: kf6-kio-devel
     version_constraint: null
     optional: false
-  - name: ktextwidgets
+  - name: kf6-ktextwidgets-devel
     version_constraint: null
     optional: false
-  - name: kxmlgui
+  - name: kf6-kxmlgui-devel
     version_constraint: null
     optional: false
   - name: qt6-qtbase-devel
@@ -48,62 +48,62 @@ dependencies:
   - name: qt6-qtmultimedia-devel
     version_constraint: '>=6.7'
     optional: false
-  - name: kconfigwidgets
+  - name: kf6-kconfigwidgets-devel
     version_constraint: null
     optional: false
-  - name: knotifications
+  - name: kf6-knotifications-devel
     version_constraint: null
     optional: false
-  - name: kservice
+  - name: kf6-kservice-devel
     version_constraint: null
     optional: false
-  - name: kwindowsystem
+  - name: kf6-kwindowsystem-devel
     version_constraint: null
     optional: false
-  - name: kbookmarks
+  - name: kf6-kbookmarks-devel
     version_constraint: null
     optional: false
-  - name: kcrash
+  - name: kf6-kcrash-devel
     version_constraint: null
     optional: false
-  - name: kguiaddons
+  - name: kf6-kguiaddons-devel
     version_constraint: null
     optional: false
-  - name: ki18n
+  - name: kf6-ki18n-devel
     version_constraint: null
     optional: false
-  - name: knewstuff
+  - name: kf6-knewstuff-devel
     version_constraint: null
     optional: false
-  - name: knotifyconfig
+  - name: kf6-knotifyconfig-devel
     version_constraint: null
     optional: false
-  - name: kparts
+  - name: kf6-kparts-devel
     version_constraint: null
     optional: false
-  - name: kwidgetsaddons
+  - name: kf6-kwidgetsaddons-devel
     version_constraint: null
     optional: false
   runtime_dependencies:
   - name: glibc
     version_constraint: '>=2.30'
     optional: false
-  - name: kconfig
+  - name: kf6-kconfig
     version_constraint: null
     optional: false
-  - name: kcoreaddons
+  - name: kf6-kcoreaddons
     version_constraint: null
     optional: false
-  - name: kiconthemes
+  - name: kf6-kiconthemes
     version_constraint: null
     optional: false
-  - name: kio
+  - name: kf6-kio
     version_constraint: null
     optional: false
-  - name: ktextwidgets
+  - name: kf6-ktextwidgets
     version_constraint: null
     optional: false
-  - name: kxmlgui
+  - name: kf6-kxmlgui
     version_constraint: null
     optional: false
   - name: qt6-qtbase
@@ -112,40 +112,40 @@ dependencies:
   - name: qt6-qtmultimedia
     version_constraint: '>=6.7'
     optional: false
-  - name: kconfigwidgets
+  - name: kf6-kconfigwidgets
     version_constraint: null
     optional: false
-  - name: knotifications
+  - name: kf6-knotifications
     version_constraint: null
     optional: false
-  - name: kservice
+  - name: kf6-kservice
     version_constraint: null
     optional: false
-  - name: kwindowsystem
+  - name: kf6-kwindowsystem
     version_constraint: null
     optional: false
-  - name: kbookmarks
+  - name: kf6-kbookmarks
     version_constraint: null
     optional: false
-  - name: kcrash
+  - name: kf6-kcrash
     version_constraint: null
     optional: false
-  - name: kguiaddons
+  - name: kf6-kguiaddons
     version_constraint: null
     optional: false
-  - name: ki18n
+  - name: kf6-ki18n
     version_constraint: null
     optional: false
-  - name: knewstuff
+  - name: kf6-knewstuff
     version_constraint: null
     optional: false
-  - name: knotifyconfig
+  - name: kf6-knotifyconfig
     version_constraint: null
     optional: false
-  - name: kparts
+  - name: kf6-kparts
     version_constraint: null
     optional: false
-  - name: kwidgetsaddons
+  - name: kf6-kwidgetsaddons
     version_constraint: null
     optional: false
   optional_dependencies: []
@@ -159,26 +159,26 @@ build:
   - cmake
   - extra-cmake-modules
   - gcc-c++
-  - kconfig
-  - kcoreaddons
-  - kiconthemes
-  - kio
-  - ktextwidgets
-  - kxmlgui
+  - kf6-kconfig-devel
+  - kf6-kcoreaddons-devel
+  - kf6-kiconthemes-devel
+  - kf6-kio-devel
+  - kf6-ktextwidgets-devel
+  - kf6-kxmlgui-devel
   - qt6-qtbase-devel
   - qt6-qtmultimedia-devel
-  - kconfigwidgets
-  - knotifications
-  - kservice
-  - kwindowsystem
-  - kbookmarks
-  - kcrash
-  - kguiaddons
-  - ki18n
-  - knewstuff
-  - knotifyconfig
-  - kparts
-  - kwidgetsaddons
+  - kf6-kconfigwidgets-devel
+  - kf6-knotifications-devel
+  - kf6-kservice-devel
+  - kf6-kwindowsystem-devel
+  - kf6-kbookmarks-devel
+  - kf6-kcrash-devel
+  - kf6-kguiaddons-devel
+  - kf6-ki18n-devel
+  - kf6-knewstuff-devel
+  - kf6-knotifyconfig-devel
+  - kf6-kparts-devel
+  - kf6-kwidgetsaddons-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe
