@@ -20,8 +20,8 @@ dependencies:
     - {name: "cmake", version_constraint: ">=3.16", optional: false}
     - {name: "ninja", version_constraint: ">=1.10", optional: false}
     - {name: "extra-cmake-modules", version_constraint: ">=6.0", optional: false}
-    - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
-    - {name: "qt6-multimedia", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-qtbase", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-qtmultimedia", version_constraint: ">=6.7", optional: false}
     - {name: "libicu", version_constraint: ">=70", optional: false}
     - {name: "pcre2", version_constraint: ">=10.30", optional: false}
 
@@ -57,8 +57,8 @@ dependencies:
 
   runtime_dependencies:
     - {name: "glibc", version_constraint: ">=2.30", optional: false}
-    - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
-    - {name: "qt6-multimedia", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-qtmultimedia", version_constraint: ">=6.7", optional: false}
     - {name: "libicu", version_constraint: ">=70", optional: false}
     - {name: "pcre2", version_constraint: ">=10.30", optional: false}
 
@@ -103,8 +103,8 @@ build:
     - "cmake"
     - "ninja"
     - "extra-cmake-modules"
-    - "qt6-base"
-    - "qt6-multimedia"
+    - "qt6-qtbase"
+    - "qt6-qtmultimedia"
     - "libicu"
     - "pcre2"
     - "kf6-kbookmarks"
