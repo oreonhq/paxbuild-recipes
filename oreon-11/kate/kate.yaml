@@ -1,80 +1,141 @@
 name: kate
-version: "25.08.3"
-description: "Kate advanced text editor"
-author: "KDE Community"
-license: "LGPL-2.0-or-later"
-homepage: "https://kde.org/"
-repository: ""
-source_url: "https://download.kde.org/stable/release-service/25.08.3/src/kate-25.08.3.tar.xz"
+version: 25.08.3
+description: Kate advanced text editor
+author: KDE Community
+license: LGPL-2.0-or-later
+homepage: https://kde.org/
+repository: ''
+source_url: https://download.kde.org/stable/release-service/25.08.3/src/kate-25.08.3.tar.xz
 keywords:
-  - kate
-  - kde
-  - plasma
+- kate
+- kde
+- plasma
 categories:
-  - desktop
-  - kde
-
+- desktop
+- kde
 dependencies:
   build_dependencies:
-    - {name: "gcc-c++", version_constraint: ">=11", optional: false}
-    - {name: "cmake", version_constraint: ">=3.16", optional: false}
-    - {name: "extra-cmake-modules", version_constraint: ">=6.0", optional: false}
-    - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
+  - name: cmake
+    version_constraint: '>=3.16'
+    optional: false
+  - name: extra-cmake-modules
+    version_constraint: '>=6.0'
+    optional: false
+  - name: gcc-c++
+    version_constraint: '>=11'
+    optional: false
+  - name: kconfig-devel
+    version_constraint: null
+    optional: false
+  - name: kcoreaddons-devel
+    version_constraint: null
+    optional: false
+  - name: kiconthemes-devel
+    version_constraint: null
+    optional: false
+  - name: kio-devel
+    version_constraint: null
+    optional: false
+  - name: ktextwidgets-devel
+    version_constraint: null
+    optional: false
+  - name: kxmlgui-devel
+    version_constraint: null
+    optional: false
+  - name: qt6-base-devel
+    version_constraint: '>=6.7'
+    optional: false
   runtime_dependencies:
-    - {name: "glibc", version_constraint: ">=2.30", optional: false}
-    - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
+  - name: glibc
+    version_constraint: '>=2.30'
+    optional: false
+  - name: kconfig
+    version_constraint: null
+    optional: false
+  - name: kcoreaddons
+    version_constraint: null
+    optional: false
+  - name: kiconthemes
+    version_constraint: null
+    optional: false
+  - name: kio
+    version_constraint: null
+    optional: false
+  - name: ktextwidgets
+    version_constraint: null
+    optional: false
+  - name: kxmlgui
+    version_constraint: null
+    optional: false
+  - name: qt6-base
+    version_constraint: '>=6.7'
+    optional: false
   optional_dependencies: []
   conflicts: []
-
 build:
   build_system: Make
   build_commands:
-    - "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF"
-    - "cmake --build build -j$(nproc)"
+  - cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
+  - cmake --build build -j$(nproc)
   build_dependencies:
-    - "gcc-c++"
-    - "cmake"
-    - "extra-cmake-modules"
-    - "qt6-base"
+  - cmake
+  - extra-cmake-modules
+  - gcc-c++
+  - kconfig-devel
+  - kcoreaddons-devel
+  - kiconthemes-devel
+  - kio-devel
+  - ktextwidgets-devel
+  - kxmlgui-devel
+  - qt6-base-devel
   build_flags: []
   environment:
-    CXXFLAGS: "-O2 -pipe"
+    CXXFLAGS: -O2 -pipe
   working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
+  target_architectures:
+  - X86_64v1
+  - X86_64v3
+  - Aarch64
   cross_compiler_prefix: null
   target_sysroot: null
-
 install:
   install_method: RunCommands
   install_commands:
-    - "DESTDIR=$DESTDIR cmake --install build"
-  install_directories: ["/usr/lib", "/usr/bin", "/usr/share"]
+  - DESTDIR=$DESTDIR cmake --install build
+  install_directories:
+  - /usr/lib
+  - /usr/bin
+  - /usr/share
   install_files: []
   post_install_commands:
-    - "ldconfig -n $DESTDIR/usr/lib || true"
-
+  - ldconfig -n $DESTDIR/usr/lib || true
 files:
-  include_patterns: ["**/*.cpp", "**/*.h", "CMakeLists.txt"]
-  exclude_patterns: ["**/*.o", "build/**"]
+  include_patterns:
+  - '**/*.cpp'
+  - '**/*.h'
+  - CMakeLists.txt
+  exclude_patterns:
+  - '**/*.o'
+  - build/**
   binary_files: []
   config_files: []
   documentation_files: []
   license_files: []
-
 scripts:
-  pre_install: "echo 'Installing kate...'"
-  post_install: |
-    echo 'kate installed'
-    ldconfig 2>/dev/null || true
-  pre_uninstall: null
-  post_uninstall: "ldconfig 2>/dev/null || true"
-  pre_upgrade: null
-  post_upgrade: "ldconfig 2>/dev/null || true"
+  pre_install: echo 'Installing kate...'
+  post_install: 'echo ''kate installed''
 
+    ldconfig 2>/dev/null || true
+
+    '
+  pre_uninstall: null
+  post_uninstall: ldconfig 2>/dev/null || true
+  pre_upgrade: null
+  post_upgrade: ldconfig 2>/dev/null || true
 metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "desktop"
-  priority: "optional"
+  maintainer: Oreon Project Team <packaging@oreonproject.org>
+  section: desktop
+  priority: optional
   provides:
-    - "kate"
+  - kate
   conflicts: []

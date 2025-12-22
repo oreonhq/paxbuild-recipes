@@ -19,7 +19,7 @@ dependencies:
     - {name: "gcc-c++", version_constraint: ">=11", optional: false}
     - {name: "cmake", version_constraint: ">=3.16", optional: false}
     - {name: "extra-cmake-modules", version_constraint: ">=6.0", optional: false}
-    - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
+    - {name: "qt6-base-devel", version_constraint: ">=6.7", optional: false}
   runtime_dependencies:
     - {name: "glibc", version_constraint: ">=2.30", optional: false}
     - {name: "qt6-base", version_constraint: ">=6.7", optional: false}
@@ -35,7 +35,7 @@ build:
     - "gcc-c++"
     - "cmake"
     - "extra-cmake-modules"
-    - "qt6-base"
+    - "qt6-base-devel"
   build_flags: []
   environment:
     CXXFLAGS: "-O2 -pipe"
