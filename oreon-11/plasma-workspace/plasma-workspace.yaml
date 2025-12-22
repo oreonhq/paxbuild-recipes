@@ -51,6 +51,9 @@ dependencies:
   - name: qt6-qtbase-devel
     version_constraint: '>=6.7'
     optional: false
+  - name: qt6-qtmultimedia-devel
+    version_constraint: '>=6.7'
+    optional: false
   runtime_dependencies:
   - name: glibc
     version_constraint: '>=2.30'
@@ -82,6 +85,9 @@ dependencies:
   - name: qt6-qtbase
     version_constraint: '>=6.7'
     optional: false
+  - name: qt6-qtmultimedia
+    version_constraint: '>=6.7'
+    optional: false
   optional_dependencies: []
   conflicts: []
 build:
@@ -102,6 +108,7 @@ build:
   - kxmlgui
   - plasma-framework
   - qt6-qtbase-devel
+  - qt6-qtmultimedia-devel
   build_flags: []
   environment:
     CXXFLAGS: -O2 -pipe

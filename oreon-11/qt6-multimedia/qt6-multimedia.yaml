@@ -92,5 +92,5 @@ metadata:
   section: libraries
   priority: optional
   provides:
-  - qt6-multimedia
+  - qt6-qtmultimedia-devel
   conflicts: []
