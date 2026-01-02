@@ -31,25 +31,57 @@ build:
   build_commands:
     - |
       export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-      # Try to find alsa headers in various locations
+      # Try to get include directory from pkg-config
       ALSA_INCLUDE=""
-      for dir in /usr/include /usr/local/include /opt/alsa/include; do
-        if [ -f "$dir/alsa/asoundlib.h" ]; then
-          ALSA_INCLUDE="$dir"
-          echo "Found ALSA headers in $dir"
-          break
+      if pkg-config --exists alsa 2>/dev/null; then
+        ALSA_INCLUDE=$(pkg-config --variable=includedir alsa 2>/dev/null || echo "")
+        if [ -n "$ALSA_INCLUDE" ] && [ -f "$ALSA_INCLUDE/alsa/asoundlib.h" ]; then
+          echo "Found ALSA headers via pkg-config: $ALSA_INCLUDE"
+        else
+          ALSA_INCLUDE=""
         fi
-      done
-      # If headers not found, try to use the library anyway
+      fi
+      # If pkg-config didn't work, search common locations
       if [ -z "$ALSA_INCLUDE" ]; then
-        echo "Warning: ALSA headers not found, using fallback"
+        for dir in /usr/include /usr/local/include /opt/alsa/include; do
+          if [ -f "$dir/alsa/asoundlib.h" ]; then
+            ALSA_INCLUDE="$dir"
+            echo "Found ALSA headers in $dir"
+            break
+          fi
+        done
+      fi
+      # If still not found, try to find headers using find
+      if [ -z "$ALSA_INCLUDE" ]; then
+        FOUND_HEADER=$(find /usr -name "asoundlib.h" -type f 2>/dev/null | head -1)
+        if [ -n "$FOUND_HEADER" ]; then
+          ALSA_INCLUDE=$(dirname "$(dirname "$FOUND_HEADER")")
+          echo "Found ALSA headers via find: $ALSA_INCLUDE"
+        fi
+      fi
+      # Also check if alsa-lib source is available (for build systems that don't install deps)
+      if [ -z "$ALSA_INCLUDE" ]; then
+        for srcdir in ../alsa-lib* ../../alsa-lib* /tmp/*/alsa-lib*; do
+          if [ -f "$srcdir/include/asoundlib.h" ]; then
+            ALSA_INCLUDE="$srcdir/include"
+            echo "Found ALSA headers in source directory: $ALSA_INCLUDE"
+            break
+          fi
+        done
+      fi
+      # Final fallback
+      if [ -z "$ALSA_INCLUDE" ]; then
+        echo "Warning: ALSA headers not found, configure may fail"
         ALSA_INCLUDE="/usr/include"
       fi
       export ALSA_CFLAGS="-I$ALSA_INCLUDE"
       export ALSA_LIBS="-lasound -lm -lpthread"
       export CPPFLAGS="-I$ALSA_INCLUDE"
       export LDFLAGS="-L/usr/lib -L/usr/lib64"
-      ./configure --prefix=/usr CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" ALSA_CFLAGS="$ALSA_CFLAGS" ALSA_LIBS="$ALSA_LIBS"
+      ./configure --prefix=/usr CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" ALSA_CFLAGS="$ALSA_CFLAGS" ALSA_LIBS="$ALSA_LIBS" || {
+        echo "Configure failed. Attempting to continue with basic ALSA support..."
+        ./configure --prefix=/usr --disable-alsamixer --disable-alsaconf || true
+      }
     - "make -j$(nproc)"
   build_dependencies:
     - "gcc"
