@@ -29,7 +29,17 @@ dependencies:
 build:
   build_system: Make
   build_commands:
-    - "./configure --prefix=/usr"
+    - |
+      export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
+      export CPPFLAGS="-I/usr/include"
+      export LDFLAGS="-L/usr/lib -L/usr/lib64"
+      if pkg-config --exists 'alsa >= 1.2.13' 2>/dev/null; then
+        ./configure --prefix=/usr
+      else
+        export ALSA_CFLAGS="-I/usr/include"
+        export ALSA_LIBS="-lasound -lm -lpthread"
+        ./configure --prefix=/usr
+      fi
     - "make -j$(nproc)"
   build_dependencies:
     - "gcc"
