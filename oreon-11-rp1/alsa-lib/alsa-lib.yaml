@@ -43,7 +43,7 @@ install:
   install_method: RunCommands
   install_commands:
     - "make install DESTDIR=$DESTDIR"
-  install_directories: ["/usr/lib", "/usr/bin", "/usr/include"]
+  install_directories: ["/usr/lib", "/usr/bin", "/usr/include", "/usr/lib/pkgconfig", "/usr/lib64/pkgconfig"]
   install_files: []
   post_install_commands:
     - "ldconfig -n $DESTDIR/usr/lib || true"

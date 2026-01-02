@@ -18,6 +18,7 @@ dependencies:
   build_dependencies:
     - {name: "gcc", version_constraint: ">=11", optional: false}
     - {name: "make", version_constraint: ">=4.3", optional: false}
+    - {name: "pkgconf", version_constraint: ">=1.7", optional: false}
     - {name: "alsa-lib", version_constraint: ">=1.2.13", optional: false}
   runtime_dependencies:
     - {name: "glibc", version_constraint: ">=2.30", optional: false}
@@ -33,10 +34,13 @@ build:
   build_dependencies:
     - "gcc"
     - "make"
+    - "pkgconf"
     - "alsa-lib"
   build_flags: []
   environment:
     CFLAGS: "-O2 -pipe"
+    CPPFLAGS: "-I/usr/include"
+    LDFLAGS: "-L/usr/lib -L/usr/lib64"
     PKG_CONFIG_PATH: "/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
   working_directory: null
   target_architectures: [X86_64v1, X86_64v3, Aarch64]
