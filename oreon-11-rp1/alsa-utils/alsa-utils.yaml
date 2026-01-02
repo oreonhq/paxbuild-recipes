@@ -37,6 +37,7 @@ build:
   build_flags: []
   environment:
     CFLAGS: "-O2 -pipe"
+    PKG_CONFIG_PATH: "/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
   working_directory: null
   target_architectures: [X86_64v1, X86_64v3, Aarch64]
   cross_compiler_prefix: null
