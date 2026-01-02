@@ -31,13 +31,15 @@ build:
   build_commands:
     - |
       export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-      if pkg-config --exists 'alsa >= 1.1.6' 2>/dev/null; then
-        ./configure --prefix=/usr
+      export CPPFLAGS="-I/usr/include"
+      export LDFLAGS="-L/usr/lib -L/usr/lib64"
+      # Check if alsa headers exist
+      if [ -f /usr/include/alsa/asoundlib.h ]; then
+        echo "Found ALSA headers"
       else
-        export ALSA_CFLAGS="-I/usr/include"
-        export ALSA_LIBS="-lasound -lm -lpthread"
-        ./configure --prefix=/usr
+        echo "Warning: ALSA headers not found in /usr/include/alsa/"
       fi
+      ./configure --prefix=/usr CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS"
     - "make -j$(nproc)"
   build_dependencies:
     - "gcc"

@@ -33,13 +33,14 @@ build:
       export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
       export CPPFLAGS="-I/usr/include"
       export LDFLAGS="-L/usr/lib -L/usr/lib64"
-      if pkg-config --exists 'alsa >= 1.2.13' 2>/dev/null; then
-        ./configure --prefix=/usr
-      else
-        export ALSA_CFLAGS="-I/usr/include"
-        export ALSA_LIBS="-lasound -lm -lpthread"
-        ./configure --prefix=/usr
+      # Check if alsa headers exist and verify version
+      if [ -f /usr/include/alsa/version.h ]; then
+        ALSA_VERSION=$(grep -E '^#define[[:space:]]+SND_LIB_VERSION_STR' /usr/include/alsa/version.h | sed 's/.*"\(.*\)".*/\1/' | head -1)
+        if [ -n "$ALSA_VERSION" ]; then
+          echo "Found ALSA version: $ALSA_VERSION"
+        fi
       fi
+      ./configure --prefix=/usr CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS"
     - "make -j$(nproc)"
   build_dependencies:
     - "gcc"
