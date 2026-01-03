@@ -1,73 +1,27 @@
 name: mdadm
-version: "4.3"
-description: "mdadm - tool for managing Linux Software RAID"
-author: "Various"
-license: "GPL-2.0-or-later"
-homepage: "https://git.kernel.org/pub/scm/utils/mdadm/mdadm.git"
-repository: ""
-source_url: "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.3.tar.xz"
-keywords:
-  - mdadm
-  - filesystem
-  - storage
-categories:
-  - system
-  - storage
-
-dependencies:
-  build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-  runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
+version: '4.3'
+description: mdadm - tool for managing Linux Software RAID
+license: GPL-2.0-or-later
+homepage: https://git.kernel.org/pub/scm/utils/mdadm/mdadm.git
+source_url: https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.3.tar.xz
 build:
   build_system: Make
   build_commands:
-    - "make"
-    - "make -j$(nproc)"
+  - make
+  - make
+dependencies:
   build_dependencies:
-    - "gcc"
-    - "make"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2 -pipe"
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories: ["/usr/bin", "/usr/sbin"]
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns: ["**/*.c", "**/*.h"]
-  exclude_patterns: ["**/*.o"]
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: "echo 'Installing mdadm...'"
-  post_install: "echo 'mdadm installed'"
-  pre_uninstall: null
-  post_uninstall: null
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "system"
-  priority: "optional"
-  provides:
-    - "mdadm"
-  conflicts: []
+  - gcc
+  - make
+  host_dependencies: []
+  runtime_dependencies:
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: '4.3'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

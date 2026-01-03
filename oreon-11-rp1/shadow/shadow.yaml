@@ -1,126 +1,48 @@
 name: shadow
-version: "4.16.0"
-description: "Shadow password suite"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
-keywords:
-  - shadow
-categories:
-  - packages
-
+version: 4.16.0
+description: Shadow password suite
+license: Various
+homepage: ''
+source_url: https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --sysconfdir=/etc --enable-nls --without-libbsd
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "bison", version_constraint: ">=3.8", optional: false}
-    - {name: "flex", version_constraint: ">=2.6", optional: false}
-    - {name: "autoconf", version_constraint: ">=2.71", optional: false}
-    - {name: "automake", version_constraint: ">=1.16", optional: false}
-    - {name: "libtool", version_constraint: ">=2.4", optional: false}
-    - {name: "gettext-devel", version_constraint: ">=0.21", optional: false}
-    - {name: "libacl-devel", version_constraint: ">=2.3", optional: false}
-    - {name: "libattr-devel", version_constraint: ">=2.5", optional: false}
-    - {name: "libeconf-devel", version_constraint: ">=0.6", optional: false}
-    - {name: "libselinux-devel", version_constraint: ">=3.7", optional: false}
-    - {name: "libsemanage-devel", version_constraint: ">=3.7", optional: false}
-    - {name: "libxcrypt-devel", version_constraint: ">=4.4", optional: false}
-    - {name: "libxslt", version_constraint: ">=1.1", optional: false}
-    - {name: "docbook-dtds", version_constraint: null, optional: false}
-    - {name: "docbook-style-xsl", version_constraint: null, optional: false}
-    - {name: "itstool", version_constraint: null, optional: false}
-    - {name: "pam", version_constraint: ">=1.6", optional: false}
-    - {name: "pam-devel", version_constraint: ">=1.6", optional: false}
-    - {name: "git-core", version_constraint: ">=2.39", optional: false}
+  - gcc
+  - make
+  - bison
+  - flex
+  - autoconf
+  - automake
+  - libtool
+  - libxslt
+  - docbook-dtds
+  - docbook-style-xsl
+  - itstool
+  - pam
+  - git-core
+  host_dependencies:
+  - gettext-devel
+  - libacl-devel
+  - libattr-devel
+  - libeconf-devel
+  - libselinux-devel
+  - libsemanage-devel
+  - libxcrypt-devel
+  - pam-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "pam", version_constraint: null, optional: false}
-    - {name: "libxcrypt", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --sysconfdir=/etc --enable-nls --without-libbsd"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "bison"
-    - "flex"
-    - "autoconf"
-    - "automake"
-    - "libtool"
-    - "gettext-devel"
-    - "libacl-devel"
-    - "libattr-devel"
-    - "libeconf-devel"
-    - "libselinux-devel"
-    - "libsemanage-devel"
-    - "libxcrypt-devel"
-    - "libxslt"
-    - "docbook-dtds"
-    - "docbook-style-xsl"
-    - "itstool"
-    - "pam"
-    - "pam-devel"
-    - "git-core"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing shadow..."
-  post_install: |
-    echo "shadow installed successfully"
-  pre_uninstall: |
-    echo "Removing shadow..."
-  post_uninstall: |
-    echo "shadow removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "shadow"
-  conflicts: []
+  - glibc
+  - pam
+  - libxcrypt
+bootstrap:
+  enabled: false
+changelog:
+- version: 4.16.0
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

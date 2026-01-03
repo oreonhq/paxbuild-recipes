@@ -1,131 +1,38 @@
 name: procps-ng
-version: "4.0.5"
-description: "Process utilities"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-4.0.4.tar.xz"
-keywords:
-  - procps-ng
-categories:
-  - packages
-
+version: 4.0.5
+description: Process utilities
+license: Various
+homepage: ''
+source_url: https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-4.0.4.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --libdir=/usr/lib --disable-static --enable-w-from
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "automake"
-      version_constraint: ">=1.16"
-      optional: false
-    - name: "libtool"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "gettext-devel"
-      version_constraint: ">=0.21"
-      optional: false
-    - name: "ncurses-devel"
-      version_constraint: ">=6.5"
-      optional: false
-    - name: "systemd-devel"
-      version_constraint: ">=254"
-      optional: false
-    - name: "git"
-      version_constraint: ">=2.39"
-      optional: false
-    - name: "po4a"
-      version_constraint: ">=0.69"
-      optional: false
-    - name: "dejagnu"
-      version_constraint: ">=1.6"
-      optional: false
-    - name: "gnupg2"
-      version_constraint: ">=2.4"
-      optional: false
+  - gcc
+  - make
+  - autoconf
+  - automake
+  - libtool
+  - git
+  - po4a
+  - dejagnu
+  - gnupg2
+  host_dependencies:
+  - gettext-devel
+  - ncurses-devel
+  - systemd-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "ncurses", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --libdir=/usr/lib --disable-static --enable-w-from"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "automake"
-    - "libtool"
-    - "gettext-devel"
-    - "ncurses-devel"
-    - "systemd-devel"
-    - "git"
-    - "po4a"
-    - "dejagnu"
-    - "gnupg2"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing procps-ng..."
-  post_install: |
-    echo "procps-ng installed successfully"
-  pre_uninstall: |
-    echo "Removing procps-ng..."
-  post_uninstall: |
-    echo "procps-ng removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "procps-ng"
-  conflicts: []
+  - glibc
+  - ncurses
+bootstrap:
+  enabled: false
+changelog:
+- version: 4.0.5
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

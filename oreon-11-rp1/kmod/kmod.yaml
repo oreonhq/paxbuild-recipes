@@ -1,94 +1,31 @@
 name: kmod
-version: "34.2"
-description: "Kernel module tools"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.2.tar.xz"
-keywords:
-  - kmod
-categories:
-  - packages
-
+version: '34.2'
+description: Kernel module tools
+license: Various
+homepage: ''
+source_url: https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.2.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --disable-zstd --disable-manpages
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=4.0"
-      optional: false
-    - name: "make"
-      version_constraint: ">=3.0"
-      optional: false
+  - gcc
+  - make
+  host_dependencies:
+  - xz-devel
+  - zlib-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "zlib", version_constraint: null, optional: false}
-    - {name: "xz-libs", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --disable-zstd --disable-manpages"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "xz-devel"
-    - "zlib-devel"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing kmod..."
-  post_install: |
-    echo "kmod installed successfully"
-  pre_uninstall: |
-    echo "Removing kmod..."
-  post_uninstall: |
-    echo "kmod removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "kmod"
-  conflicts: []
+  - glibc
+  - zlib
+  - xz-libs
+bootstrap:
+  enabled: false
+changelog:
+- version: '34.2'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

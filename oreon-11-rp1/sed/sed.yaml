@@ -1,67 +1,27 @@
 name: sed
-version: "4.9"
-description: "GNU sed - stream editor"
-author: "GNU Project"
-license: "GPL-3.0-or-later"
-homepage: "https://www.gnu.org/software/sed/"
-repository: "https://git.savannah.gnu.org/git/sed.git"
-source_url: "https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz"
-keywords: [sed, stream, editor, text]
-categories: [system, utilities]
-
+version: '4.9'
+description: GNU sed - stream editor
+license: GPL-3.0-or-later
+homepage: https://www.gnu.org/software/sed/
+source_url: https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
+  - gcc
+  - make
+  host_dependencies: []
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2 -pipe"
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories: ["/usr/bin"]
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns: ["**/*.c", "**/*.h", "configure"]
-  exclude_patterns: ["**/*.o"]
-  binary_files: ["usr/bin/sed"]
-  config_files: []
-  documentation_files: []
-  license_files: ["COPYING"]
-
-scripts:
-  pre_install: "echo 'Installing sed...'"
-  post_install: "echo 'sed installed'"
-  pre_uninstall: null
-  post_uninstall: null
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "utilities"
-  priority: "required"
-  provides: ["sed"]
-  conflicts: []
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: '4.9'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

@@ -1,128 +1,38 @@
 name: bash
-version: "5.2"
-description: "Bash shell"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz"
-keywords:
-  - bash
-categories:
-  - packages
-
+version: '5.2'
+description: Bash shell
+license: Various
+homepage: ''
+source_url: https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --without-bash-malloc
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "gettext"
-      version_constraint: ">=0.21"
-      optional: false
-    - name: "texinfo"
-      version_constraint: ">=7.0"
-      optional: false
-    - name: "bison"
-      version_constraint: ">=3.8"
-      optional: false
-    - name: "ncurses-devel"
-      version_constraint: ">=6.5"
-      optional: false
-    - name: "readline-devel"
-      version_constraint: ">=8.2"
-      optional: false
-    - name: "audit-libs-devel"
-      version_constraint: ">=3.1"
-      optional: false
-    - name: "glibc-all-langpacks"
-      version_constraint: ">=2.38"
-      optional: false
-    - name: "gnupg2"
-      version_constraint: ">=2.4"
-      optional: false
+  - gcc
+  - make
+  - autoconf
+  - gettext
+  - texinfo
+  - bison
+  - glibc-all-langpacks
+  - gnupg2
+  host_dependencies:
+  - ncurses-devel
+  - readline-devel
+  - audit-libs-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "ncurses", version_constraint: null, optional: false}
-    - {name: "readline", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --without-bash-malloc"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "gettext"
-    - "texinfo"
-    - "bison"
-    - "readline-devel"
-    - "ncurses-devel"
-    - "audit-libs-devel"
-    - "glibc-all-langpacks"
-    - "gnupg2"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-  post_install_commands:
-    - "[ -n \"$STRIP\" ] && find $DESTDIR/usr/bin -type f -executable -exec \"$STRIP\" {} \\; 2>/dev/null || true"
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing bash..."
-  post_install: |
-    echo "bash installed successfully"
-  pre_uninstall: |
-    echo "Removing bash..."
-  post_uninstall: |
-    echo "bash removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "bash"
-  conflicts: []
+  - glibc
+  - ncurses
+  - readline
+bootstrap:
+  enabled: false
+changelog:
+- version: '5.2'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

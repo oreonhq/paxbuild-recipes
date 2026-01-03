@@ -1,141 +1,50 @@
 name: grub2-pc
-version: "2.12"
-description: "GRUB2 bootloader for BIOS (i386-pc target)"
-author: "Various"
-license: "GPL-3.0-or-later"
-homepage: "https://www.gnu.org/software/grub/"
-repository: "https://git.savannah.gnu.org/git/grub.git"
-source_url: "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
-keywords:
-  - grub
-  - grub2
-  - bootloader
-  - bios
-categories:
-  - packages
-  - boot
-
+version: '2.12'
+description: GRUB2 bootloader for BIOS (i386-pc target)
+license: GPL-3.0-or-later
+homepage: https://www.gnu.org/software/grub/
+source_url: https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --sysconfdir=/etc --target=i386 --with-platform=pc --disable-werror --disable-grub-mount --disable-grub-emu --disable-grub-mkfont
+  - make -C grub-core extra_deps.lst || touch grub-core/extra_deps.lst
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "autoconf", version_constraint: ">=2.71", optional: false}
-    - {name: "automake", version_constraint: ">=1.16", optional: false}
-    - {name: "binutils", version_constraint: ">=2.43", optional: false}
-    - {name: "bison", version_constraint: ">=3.8", optional: false}
-    - {name: "bzip2-devel", version_constraint: ">=1.0", optional: false}
-    - {name: "device-mapper-devel", version_constraint: ">=1.02", optional: false}
-    - {name: "flex", version_constraint: ">=2.6", optional: false}
-    - {name: "freetype-devel", version_constraint: ">=2.10", optional: false}
-    - {name: "fuse3-devel", version_constraint: ">=3.10", optional: false}
-    - {name: "gettext-devel", version_constraint: ">=0.21", optional: false}
-    - {name: "ncurses-devel", version_constraint: ">=6.5", optional: false}
-    - {name: "python3", version_constraint: ">=3.11", optional: false}
-    - {name: "texinfo", version_constraint: ">=7.0", optional: false}
-    - {name: "xz-devel", version_constraint: ">=5.6", optional: false}
+  - gcc
+  - make
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - flex
+  - python3
+  - texinfo
+  - dejavu-sans-fonts
+  - git-core
+  - help2man
+  - rpm-libs
+  - squashfs-tools
+  - systemd-rpm-macros
+  - ccache
+  host_dependencies:
+  - bzip2-devel
+  - device-mapper-devel
+  - freetype-devel
+  - fuse3-devel
+  - gettext-devel
+  - ncurses-devel
+  - xz-devel
+  - rpm-devel
   runtime_dependencies:
-    - {name: "grub", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --sysconfdir=/etc --target=i386 --with-platform=pc --disable-werror --disable-grub-mount --disable-grub-emu --disable-grub-mkfont"
-    - "make -C grub-core extra_deps.lst || touch grub-core/extra_deps.lst"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "automake"
-    - "binutils"
-    - "bison"
-    - "bzip2-devel"
-    - "dejavu-sans-fonts"
-    - "device-mapper-devel"
-    - "flex"
-    - "freetype-devel"
-    - "fuse3-devel"
-    - "gettext-devel"
-    - "git-core"
-    - "help2man"
-    - "ncurses-devel"
-    - "python3"
-    - "rpm-devel"
-    - "rpm-libs"
-    - "squashfs-tools"
-    - "texinfo"
-    - "xz-devel"
-    - "systemd-rpm-macros"
-    - "ccache"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-    - "mkdir -p $DESTDIR/usr/lib/grub/i386-pc"
-    - "cp -r grub-core/*.mod $DESTDIR/usr/lib/grub/i386-pc/ || true"
-    - "cp -r grub-core/*.lst $DESTDIR/usr/lib/grub/i386-pc/ || true"
-    - "cp grub-core/grub-core.img $DESTDIR/usr/lib/grub/i386-pc/ || true"
-    - "cp grub-core/kernel.img $DESTDIR/usr/lib/grub/i386-pc/ || true"
-  install_directories:
-    - "/usr/bin"
-    - "/usr/sbin"
-    - "/usr/lib/grub/i386-pc"
-    - "/usr/share/grub"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files:
-    - "usr/bin/grub-*"
-    - "usr/sbin/grub-*"
-    - "usr/lib/grub/i386-pc/*.mod"
-    - "usr/lib/grub/i386-pc/*.lst"
-    - "usr/lib/grub/i386-pc/*.img"
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing grub2-pc (BIOS bootloader)..."
-  post_install: |
-    echo "grub2-pc installed successfully"
-  pre_uninstall: |
-    echo "Removing grub2-pc..."
-  post_uninstall: |
-    echo "grub2-pc removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "grub2-pc"
-    - "grub-pc"
-  conflicts: []
-
+  - grub
+bootstrap:
+  enabled: false
+changelog:
+- version: '2.12'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

@@ -1,102 +1,43 @@
 name: sudo
-version: "1.9.17"
-description: "Allows users to run programs with security privileges of another user"
-author: "Todd C. Miller"
-license: "ISC"
-homepage: "https://www.sudo.ws/"
-repository: "https://github.com/sudo-project/sudo"
-source_url: "https://www.sudo.ws/dist/sudo-1.9.17.tar.gz"
-keywords: [sudo, privilege, security, admin]
-categories: [security, admin]
-
+version: 1.9.17
+description: Allows users to run programs with security privileges of another user
+license: ISC
+homepage: https://www.sudo.ws/
+source_url: https://www.sudo.ws/dist/sudo-1.9.17.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - './configure --prefix=/usr --libexecdir=/usr/lib --with-rundir=/run/sudo --with-vardir=/var/db/sudo --with-secure-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --with-all-insults --with-env-editor --with-pam --with-passprompt=''[sudo] password for %p: '''
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "pam-devel", version_constraint: ">=1.5", optional: false}
-    - {name: "groff", version_constraint: ">=1.22", optional: false}
-    - {name: "openldap-devel", version_constraint: ">=2.6", optional: false}
-    - {name: "flex", version_constraint: ">=2.6", optional: false}
-    - {name: "bison", version_constraint: ">=3.8", optional: false}
-    - {name: "libtool", version_constraint: ">=2.4", optional: false}
-    - {name: "audit-libs-devel", version_constraint: ">=3.1", optional: false}
-    - {name: "libcap-devel", version_constraint: ">=2.70", optional: false}
-    - {name: "libselinux-devel", version_constraint: ">=3.7", optional: false}
-    - {name: "systemd-rpm-macros", version_constraint: null, optional: false}
-    - {name: "gettext", version_constraint: ">=0.21", optional: false}
-    - {name: "zlib-devel", version_constraint: ">=1.2", optional: false}
-    - {name: "openssl-devel", version_constraint: ">=3.0", optional: false}
-    - {name: "python3-devel", version_constraint: ">=3.11", optional: false}
+  - gcc
+  - make
+  - groff
+  - flex
+  - bison
+  - libtool
+  - systemd-rpm-macros
+  - gettext
+  host_dependencies:
+  - pam-devel
+  - openldap-devel
+  - audit-libs-devel
+  - libcap-devel
+  - libselinux-devel
+  - zlib-devel
+  - openssl-devel
+  - python3-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "pam", version_constraint: null, optional: false}
-    - {name: "shadow", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --libexecdir=/usr/lib --with-rundir=/run/sudo --with-vardir=/var/db/sudo --with-secure-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --with-all-insults --with-env-editor --with-pam --with-passprompt='[sudo] password for %p: '"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "pam-devel"
-    - "groff"
-    - "openldap-devel"
-    - "flex"
-    - "bison"
-    - "libtool"
-    - "audit-libs-devel"
-    - "libcap-devel"
-    - "libselinux-devel"
-    - "systemd-rpm-macros"
-    - "gettext"
-    - "zlib-devel"
-    - "openssl-devel"
-    - "python3-devel"
-  build_flags: ["-O2"]
-  environment: {CFLAGS: "-O2"}
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR INSTALL_OWNER=''"
-    - "mkdir -p $DESTDIR/etc/sudoers.d"
-    - "chmod 440 $DESTDIR/etc/sudoers || true"
-    - "chmod 750 $DESTDIR/etc/sudoers.d || true"
-  install_directories: ["/usr/bin", "/usr/sbin", "/etc/sudoers.d"]
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns: ["**/*.c", "configure"]
-  exclude_patterns: ["**/*.o"]
-  binary_files: ["usr/bin/sudo", "usr/bin/sudoedit", "usr/sbin/visudo"]
-  config_files: ["/etc/sudoers", "/etc/sudoers.d/*"]
-  documentation_files: []
-  license_files: ["LICENSE.md"]
-
-scripts:
-  pre_install: "echo 'Installing sudo...'"
-  post_install: |
-    echo "sudo installed successfully"
-    echo "Configure /etc/sudoers for user privileges"
-  pre_uninstall: null
-  post_uninstall: null
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "admin"
-  priority: "important"
-  provides: ["sudo"]
-  conflicts: []
-
+  - glibc
+  - pam
+  - shadow
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.9.17
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

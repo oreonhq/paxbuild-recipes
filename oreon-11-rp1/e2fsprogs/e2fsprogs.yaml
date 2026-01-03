@@ -1,135 +1,39 @@
 name: e2fsprogs
-version: "1.47.3"
-description: "Ext2/3/4 file system programs"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.47.3/e2fsprogs-1.47.3.tar.gz"
-keywords:
-  - e2fsprogs
-categories:
-  - packages
-
+version: 1.47.3
+description: Ext2/3/4 file system programs
+license: Various
+homepage: ''
+source_url: https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.47.3/e2fsprogs-1.47.3.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "pkgconf"
-      version_constraint: ">=1.7"
-      optional: false
-    - name: "gettext"
-      version_constraint: ">=0.21"
-      optional: false
-    - name: "libselinux-devel"
-      version_constraint: ">=3.7"
-      optional: false
-    - name: "libsepol-devel"
-      version_constraint: ">=3.7"
-      optional: false
-    - name: "libblkid-devel"
-      version_constraint: ">=2.40"
-      optional: false
-    - name: "libuuid-devel"
-      version_constraint: ">=2.40"
-      optional: false
-    - name: "fuse3-devel"
-      version_constraint: ">=3.14"
-      optional: false
-    - name: "systemd"
-      version_constraint: ">=254"
-      optional: false
-    - name: "gnupg2"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "xz"
-      version_constraint: ">=5.4"
-      optional: false
-    - name: "gawk"
-      version_constraint: ">=5.1"
-      optional: false
+  - gcc
+  - make
+  - pkgconf
+  - gettext
+  - systemd
+  - gnupg2
+  - xz
+  - gawk
+  host_dependencies:
+  - libselinux-devel
+  - libsepol-devel
+  - libblkid-devel
+  - libuuid-devel
+  - fuse3-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "util-linux", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "pkgconf"
-    - "gettext"
-    - "libselinux-devel"
-    - "libsepol-devel"
-    - "libblkid-devel"
-    - "libuuid-devel"
-    - "fuse3-devel"
-    - "systemd"
-    - "gnupg2"
-    - "xz"
-    - "gawk"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing e2fsprogs..."
-  post_install: |
-    echo "e2fsprogs installed successfully"
-  pre_uninstall: |
-    echo "Removing e2fsprogs..."
-  post_uninstall: |
-    echo "e2fsprogs removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "e2fsprogs"
-  conflicts: []
+  - glibc
+  - util-linux
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.47.3
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

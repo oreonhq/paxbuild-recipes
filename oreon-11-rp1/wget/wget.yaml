@@ -1,106 +1,34 @@
 name: wget
-version: "1.21.4"
-description: "GNU Wget - a file retrieval utility"
-author: "GNU Project"
-license: "GPL-3.0-or-later"
-homepage: "https://www.gnu.org/software/wget/"
-repository: "https://git.savannah.gnu.org/git/wget.git"
-source_url: "https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz"
-keywords:
-  - wget
-  - download
-  - http
-  - ftp
-  - networking
-categories:
-  - packages
-  - networking
-
+version: 1.21.4
+description: GNU Wget - a file retrieval utility
+license: GPL-3.0-or-later
+homepage: https://www.gnu.org/software/wget/
+source_url: https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --with-ssl=openssl --with-libssl-prefix=/usr --with-libidn2
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=4.0"
-      optional: false
-    - name: "make"
-      version_constraint: ">=3.0"
-      optional: false
+  - gcc
+  - make
+  - libidn2
+  host_dependencies:
+  - openssl-devel
+  - zlib-devel
+  - pcre2-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "openssl", version_constraint: null, optional: false}
-    - {name: "zlib", version_constraint: null, optional: false}
-    - {name: "libidn2", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --with-ssl=openssl --with-libssl-prefix=/usr --with-libidn2"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "openssl-devel"
-    - "zlib-devel"
-    - "pcre2-devel"
-    - "libidn2"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-    - "/usr/share/man"
-    - "/usr/share/doc"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files:
-    - "usr/bin/wget"
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing wget..."
-  post_install: |
-    echo "wget installed successfully"
-  pre_uninstall: |
-    echo "Removing wget..."
-  post_uninstall: |
-    echo "wget removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "wget"
-  conflicts: []
-
+  - glibc
+  - openssl
+  - zlib
+  - libidn2
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.21.4
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

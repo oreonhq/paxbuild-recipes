@@ -1,110 +1,32 @@
 name: pkgconf
-version: "2.3.0"
-description: "Pkg-config replacement"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz"
-keywords:
-  - pkgconf
-categories:
-  - packages
-
+version: 2.3.0
+description: Pkg-config replacement
+license: Various
+homepage: ''
+source_url: https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "automake"
-      version_constraint: ">=1.16"
-      optional: false
-    - name: "libtool"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "kyua"
-      version_constraint: ">=0.13"
-      optional: false
-    - name: "atf-tests"
-      version_constraint: ">=0.21"
-      optional: false
+  - gcc
+  - make
+  - autoconf
+  - automake
+  - libtool
+  - kyua
+  - atf-tests
+  host_dependencies: []
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "automake"
-    - "libtool"
-    - "kyua"
-    - "atf-tests"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing pkgconf..."
-  post_install: |
-    echo "pkgconf installed successfully"
-  pre_uninstall: |
-    echo "Removing pkgconf..."
-  post_uninstall: |
-    echo "pkgconf removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "pkgconf"
-  conflicts: []
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 2.3.0
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

@@ -1,142 +1,41 @@
 name: coreutils
-version: "9.7"
-description: "GNU core utilities"
-author: "GNU Project"
-license: "GPL-3.0-or-later"
-homepage: "https://www.gnu.org/software/coreutils/"
-repository: "https://git.savannah.gnu.org/git/coreutils.git"
-source_url: "https://ftp.gnu.org/gnu/coreutils/coreutils-9.7.tar.xz"
-keywords:
-  - coreutils
-  - gnu
-  - utilities
-categories:
-  - packages
-
+version: '9.7'
+description: GNU core utilities
+license: GPL-3.0-or-later
+homepage: https://www.gnu.org/software/coreutils/
+source_url: https://ftp.gnu.org/gnu/coreutils/coreutils-9.7.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --enable-no-install-program=kill,uptime
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "automake"
-      version_constraint: ">=1.16"
-      optional: false
-    - name: "libtool"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "gettext"
-      version_constraint: ">=0.21"
-      optional: false
-    - name: "texinfo"
-      version_constraint: ">=7.0"
-      optional: false
-    - name: "gperf"
-      version_constraint: ">=3.1"
-      optional: false
-    - name: "libattr-devel"
-      version_constraint: ">=2.5"
-      optional: false
-    - name: "libcap-devel"
-      version_constraint: ">=2.69"
-      optional: false
-    - name: "libselinux-devel"
-      version_constraint: ">=3.7"
-      optional: false
-    - name: "libacl-devel"
-      version_constraint: ">=2.3"
-      optional: false
-    - name: "gmp-devel"
-      version_constraint: ">=6.2"
-      optional: false
-    - name: "openssl-devel"
-      version_constraint: ">=3.0"
-      optional: false
+  - gcc
+  - make
+  - autoconf
+  - automake
+  - libtool
+  - gettext
+  - texinfo
+  - gperf
+  host_dependencies:
+  - libattr-devel
+  - libcap-devel
+  - libselinux-devel
+  - libacl-devel
+  - gmp-devel
+  - openssl-devel
+  - attr-devel
+  - acl-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --enable-no-install-program=kill,uptime"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "automake"
-    - "libtool"
-    - "gettext"
-    - "texinfo"
-    - "gperf"
-    - "attr-devel"
-    - "libcap-devel"
-    - "libselinux-devel"
-    - "acl-devel"
-    - "gmp-devel"
-    - "openssl-devel"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-    - "/usr/libexec"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-    - "src/**/*"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing coreutils..."
-  post_install: |
-    echo "coreutils installed successfully"
-  pre_uninstall: |
-    echo "Removing coreutils..."
-  post_uninstall: |
-    echo "coreutils removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "standard"
-  provides:
-    - "coreutils"
-  conflicts: []
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: '9.7'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

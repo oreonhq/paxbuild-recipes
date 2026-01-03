@@ -1,139 +1,32 @@
 name: alsa-utils
-version: "1.2.13"
-description: "ALSA utilities"
-author: "Various"
-license: "GPL-2.0-or-later"
-homepage: "https://www.alsa-project.org/"
-repository: ""
-source_url: "https://www.alsa-project.org/files/pub/utils/alsa-utils-1.2.13.tar.bz2"
-keywords:
-  - alsa-utils
-  - audio
-  - multimedia
-categories:
-  - multimedia
-  - audio
-
+version: 1.2.13
+description: ALSA utilities
+license: GPL-2.0-or-later
+homepage: https://www.alsa-project.org/
+source_url: https://www.alsa-project.org/files/pub/utils/alsa-utils-1.2.13.tar.bz2
+build:
+  build_system: Autotools
+  build_commands:
+  - "export PKG_CONFIG_PATH=\"/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig\"\n# Try to get include directory from pkg-config\nALSA_INCLUDE=\"\"\nif pkg-config --exists alsa 2>/dev/null; then\n  ALSA_INCLUDE=$(pkg-config --variable=includedir alsa 2>/dev/null || echo \"\")\n  if [ -n \"$ALSA_INCLUDE\" ] && [ -f \"$ALSA_INCLUDE/alsa/asoundlib.h\" ]; then\n    echo \"Found ALSA headers via pkg-config: $ALSA_INCLUDE\"\n  else\n    ALSA_INCLUDE=\"\"\n  fi\nfi\n# If pkg-config didn't work, search common locations\nif [ -z \"$ALSA_INCLUDE\" ]; then\n  for dir in /usr/include /usr/local/include /opt/alsa/include; do\n    if [ -f \"$dir/alsa/asoundlib.h\" ]; then\n      ALSA_INCLUDE=\"$dir\"\n      echo \"Found ALSA headers in $dir\"\n      # Try to get version\n      if [ -f \"$dir/alsa/version.h\" ]; then\n        ALSA_VERSION=$(grep -E '^#define[[:space:]]+SND_LIB_VERSION_STR' \"$dir/alsa/version.h\" | sed 's/.*\"\\(.*\\)\".*/\\1/' | head -1)\n        if [ -n \"$ALSA_VERSION\"\
+    \ ]; then\n          echo \"Found ALSA version: $ALSA_VERSION\"\n        fi\n      fi\n      break\n    fi\n  done\nfi\n# If still not found, try to find headers using find\nif [ -z \"$ALSA_INCLUDE\" ]; then\n  FOUND_HEADER=$(find /usr -name \"asoundlib.h\" -type f 2>/dev/null | head -1)\n  if [ -n \"$FOUND_HEADER\" ]; then\n    ALSA_INCLUDE=$(dirname \"$(dirname \"$FOUND_HEADER\")\")\n    echo \"Found ALSA headers via find: $ALSA_INCLUDE\"\n  fi\nfi\n# Also check if alsa-lib source is available (for build systems that don't install deps)\nif [ -z \"$ALSA_INCLUDE\" ]; then\n  for srcdir in ../alsa-lib* ../../alsa-lib* /tmp/*/alsa-lib*; do\n    if [ -f \"$srcdir/include/asoundlib.h\" ]; then\n      ALSA_INCLUDE=\"$srcdir/include\"\n      echo \"Found ALSA headers in source directory: $ALSA_INCLUDE\"\n      break\n    fi\n  done\nfi\n# Final fallback\nif [ -z \"$ALSA_INCLUDE\" ]; then\n  echo \"Warning: ALSA headers not found, configure may fail\"\n  ALSA_INCLUDE=\"/usr/include\"\nfi\n\
+    export ALSA_CFLAGS=\"-I$ALSA_INCLUDE\"\nexport ALSA_LIBS=\"-lasound -lm -lpthread\"\nexport CPPFLAGS=\"-I$ALSA_INCLUDE\"\nexport LDFLAGS=\"-L/usr/lib -L/usr/lib64\"\n./configure --prefix=/usr CPPFLAGS=\"$CPPFLAGS\" LDFLAGS=\"$LDFLAGS\" ALSA_CFLAGS=\"$ALSA_CFLAGS\" ALSA_LIBS=\"$ALSA_LIBS\""
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "pkgconf", version_constraint: ">=1.7", optional: false}
-    - {name: "alsa-lib", version_constraint: ">=1.2.13", optional: false}
+  - gcc
+  - make
+  - pkgconf
+  - alsa-lib
+  host_dependencies: []
   runtime_dependencies:
-    - {name: "glibc", version_constraint: ">=2.30", optional: false}
-    - {name: "alsa-lib", version_constraint: ">=1.2.13", optional: false}
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - |
-      export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-      # Try to get include directory from pkg-config
-      ALSA_INCLUDE=""
-      if pkg-config --exists alsa 2>/dev/null; then
-        ALSA_INCLUDE=$(pkg-config --variable=includedir alsa 2>/dev/null || echo "")
-        if [ -n "$ALSA_INCLUDE" ] && [ -f "$ALSA_INCLUDE/alsa/asoundlib.h" ]; then
-          echo "Found ALSA headers via pkg-config: $ALSA_INCLUDE"
-        else
-          ALSA_INCLUDE=""
-        fi
-      fi
-      # If pkg-config didn't work, search common locations
-      if [ -z "$ALSA_INCLUDE" ]; then
-        for dir in /usr/include /usr/local/include /opt/alsa/include; do
-          if [ -f "$dir/alsa/asoundlib.h" ]; then
-            ALSA_INCLUDE="$dir"
-            echo "Found ALSA headers in $dir"
-            # Try to get version
-            if [ -f "$dir/alsa/version.h" ]; then
-              ALSA_VERSION=$(grep -E '^#define[[:space:]]+SND_LIB_VERSION_STR' "$dir/alsa/version.h" | sed 's/.*"\(.*\)".*/\1/' | head -1)
-              if [ -n "$ALSA_VERSION" ]; then
-                echo "Found ALSA version: $ALSA_VERSION"
-              fi
-            fi
-            break
-          fi
-        done
-      fi
-      # If still not found, try to find headers using find
-      if [ -z "$ALSA_INCLUDE" ]; then
-        FOUND_HEADER=$(find /usr -name "asoundlib.h" -type f 2>/dev/null | head -1)
-        if [ -n "$FOUND_HEADER" ]; then
-          ALSA_INCLUDE=$(dirname "$(dirname "$FOUND_HEADER")")
-          echo "Found ALSA headers via find: $ALSA_INCLUDE"
-        fi
-      fi
-      # Also check if alsa-lib source is available (for build systems that don't install deps)
-      if [ -z "$ALSA_INCLUDE" ]; then
-        for srcdir in ../alsa-lib* ../../alsa-lib* /tmp/*/alsa-lib*; do
-          if [ -f "$srcdir/include/asoundlib.h" ]; then
-            ALSA_INCLUDE="$srcdir/include"
-            echo "Found ALSA headers in source directory: $ALSA_INCLUDE"
-            break
-          fi
-        done
-      fi
-      # Final fallback
-      if [ -z "$ALSA_INCLUDE" ]; then
-        echo "Warning: ALSA headers not found, configure may fail"
-        ALSA_INCLUDE="/usr/include"
-      fi
-      export ALSA_CFLAGS="-I$ALSA_INCLUDE"
-      export ALSA_LIBS="-lasound -lm -lpthread"
-      export CPPFLAGS="-I$ALSA_INCLUDE"
-      export LDFLAGS="-L/usr/lib -L/usr/lib64"
-      ./configure --prefix=/usr CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" ALSA_CFLAGS="$ALSA_CFLAGS" ALSA_LIBS="$ALSA_LIBS"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "pkgconf"
-    - "alsa-lib"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2 -pipe"
-    CPPFLAGS: "-I/usr/include"
-    LDFLAGS: "-L/usr/lib -L/usr/lib64"
-    PKG_CONFIG_PATH: "/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories: ["/usr/lib", "/usr/bin"]
-  install_files: []
-  post_install_commands:
-    - "ldconfig -n $DESTDIR/usr/lib || true"
-
-files:
-  include_patterns: ["**/*.c", "**/*.h"]
-  exclude_patterns: ["**/*.o"]
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: "echo 'Installing alsa-utils...'"
-  post_install: |
-    echo 'alsa-utils installed'
-    ldconfig 2>/dev/null || true
-  pre_uninstall: null
-  post_uninstall: "ldconfig 2>/dev/null || true"
-  pre_upgrade: null
-  post_upgrade: "ldconfig 2>/dev/null || true"
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "multimedia"
-  priority: "optional"
-  provides:
-    - "alsa-utils"
-  conflicts: []
+  - glibc
+  - alsa-lib
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.2.13
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

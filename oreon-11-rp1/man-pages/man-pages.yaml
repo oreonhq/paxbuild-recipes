@@ -1,69 +1,26 @@
 name: man-pages
-version: "6.10"
-description: "man-pages - Linux manual pages"
-author: "Various"
-license: "Various"
-homepage: "https://www.kernel.org/doc/man-pages/"
-repository: ""
-source_url: "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.10.tar.xz"
-keywords:
-  - man-pages
-categories:
-  - packages
-
-dependencies:
-  build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-  runtime_dependencies: []
-
-  optional_dependencies: []
-  conflicts: []
-
+version: '6.10'
+description: man-pages - Linux manual pages
+license: Various
+homepage: https://www.kernel.org/doc/man-pages/
+source_url: https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.10.tar.xz
 build:
   build_system: Make
   build_commands:
-    - "make prefix=/usr"
-    - "make -j$(nproc)"
+  - make prefix=/usr
+  - make
+dependencies:
   build_dependencies:
-    - "gcc"
-    - "make"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2 -pipe"
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories: ["/usr/bin"]
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns: ["**/*.c", "**/*.h", "configure"]
-  exclude_patterns: ["**/*.o"]
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: "echo 'Installing man-pages...'"
-  post_install: "echo 'man-pages installed'"
-  pre_uninstall: null
-  post_uninstall: null
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "man-pages"
-  conflicts: []
+  - gcc
+  - make
+  host_dependencies: []
+  runtime_dependencies: []
+bootstrap:
+  enabled: false
+changelog:
+- version: '6.10'
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

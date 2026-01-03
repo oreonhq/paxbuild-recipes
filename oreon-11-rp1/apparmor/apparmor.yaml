@@ -1,181 +1,54 @@
 name: apparmor
-version: "4.1.2"
-description: "Application Armor security framework"
-author: "Various"
-license: "GPL-2.0"
-homepage: ""
-repository: "https://gitlab.com/apparmor/apparmor.git"
-source_url: "https://gitlab.com/apparmor/apparmor/-/archive/v4.1.2/apparmor-4.1.2.tar.gz"
-keywords:
-  - apparmor
-  - security
-categories:
-  - packages
+version: 4.1.2
+description: Application Armor security framework
+license: GPL-2.0
+homepage: ''
+source_url: https://gitlab.com/apparmor/apparmor/-/archive/v4.1.2/apparmor-4.1.2.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - 'export PYTHON=/usr/bin/python3
 
+    export PYTHON_VERSION=3
+
+    export PYTHON_VERSIONS=python3
+
+    export PYTHONPATH=$(realpath libraries/libapparmor/swig/python 2>/dev/null || echo libraries/libapparmor/swig/python)'
+  - "set -e\ncd libraries/libapparmor\nif [ ! -f ./configure ]; then\n  sh ./autogen.sh\nfi\nif [ ! -f ./configure ]; then\n  echo \"libapparmor: configure script missing after autogen\" >&2\n  exit 1\nfi\nchmod +x ./configure 2>/dev/null || true\n./configure --prefix=/usr --disable-man-pages\nmake"
+  - cd binutils && make
+  - cd parser && sed -i 's/-static-libstdc++//g' Makefile && sed -i 's|pod2html|true|g' ../common/Make.rules && make
+  - cd utils && make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "gcc-c++"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "autoconf-archive"
-      version_constraint: ">=2023"
-      optional: false
-    - name: "automake"
-      version_constraint: ">=1.16"
-      optional: false
-    - name: "libtool"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "pkgconf"
-      version_constraint: ">=1.7"
-      optional: false
-    - name: "bison"
-      version_constraint: ">=3.8"
-      optional: false
-    - name: "flex"
-      version_constraint: ">=2.6"
-      optional: false
-    - name: "dejagnu"
-      version_constraint: ">=1.6"
-      optional: false
-    - name: "swig"
-      version_constraint: ">=4.0"
-      optional: false
-    - name: "python3"
-      version_constraint: ">=3.11"
-      optional: false
-    - name: "python3-devel"
-      version_constraint: ">=3.11"
-      optional: false
-    - name: "python3-setuptools"
-      version_constraint: ">=71"
-      optional: false
-    - name: "perl(Pod::Checker)"
-      version_constraint: null
-      optional: false
-    - name: "perl(Pod::Html)"
-      version_constraint: null
-      optional: false
-    - name: "perl"
-      version_constraint: ">=5.32"
-      optional: false
-    - name: "gawk"
-      version_constraint: ">=1.0"
-      optional: false
-    - name: "gawk-devel"
-      version_constraint: ">=1.0"
-      optional: false
-    - name: "which"
-      version_constraint: ">=2.0"
-      optional: false
+  - gcc
+  - gcc-c++
+  - make
+  - autoconf
+  - autoconf-archive
+  - automake
+  - libtool
+  - pkgconf
+  - bison
+  - flex
+  - dejagnu
+  - swig
+  - python3
+  - python3-setuptools
+  - perl(Pod::Checker)
+  - perl(Pod::Html)
+  - perl
+  - gawk
+  - which
+  host_dependencies:
+  - python3-devel
+  - gawk-devel
   runtime_dependencies: []
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - |
-      export PYTHON=/usr/bin/python3
-      export PYTHON_VERSION=3
-      export PYTHON_VERSIONS=python3
-      export PYTHONPATH=$(realpath libraries/libapparmor/swig/python 2>/dev/null || echo libraries/libapparmor/swig/python)
-    - |
-      set -e
-      cd libraries/libapparmor
-      if [ ! -f ./configure ]; then
-        sh ./autogen.sh
-      fi
-      if [ ! -f ./configure ]; then
-        echo "libapparmor: configure script missing after autogen" >&2
-        exit 1
-      fi
-      chmod +x ./configure 2>/dev/null || true
-      ./configure --prefix=/usr --disable-man-pages
-      make
-    - "cd binutils && make"
-    - "cd parser && sed -i 's/-static-libstdc++//g' Makefile && sed -i 's|pod2html|true|g' ../common/Make.rules && make"
-    - "cd utils && make"
-  build_dependencies:
-    - "gcc"
-    - "gcc-c++"
-    - "make"
-    - "autoconf"
-    - "autoconf-archive"
-    - "automake"
-    - "libtool"
-    - "pkgconf"
-    - "bison"
-    - "flex"
-    - "dejagnu"
-    - "swig"
-    - "python3"
-    - "python3-devel"
-    - "python3-setuptools"
-    - "perl"
-    - "perl(Pod::Checker)"
-    - "perl(Pod::Html)"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "cd libraries/libapparmor && make install DESTDIR=${DESTDIR}"
-    - "cd binutils && sed -i 's| DESTDIR=/| |g' po/Makefile ../common/Make-po.rules 2>/dev/null || true && make install DESTDIR=${DESTDIR}"
-    - "cd parser && sed -i 's| DESTDIR=/| |g' po/Makefile ../common/Make-po.rules 2>/dev/null || true && make install DESTDIR=${DESTDIR} DISTRO="
-    - "cd utils && sed -i 's| DESTDIR=/| |g' po/Makefile ../common/Make-po.rules 2>/dev/null || true && make install DESTDIR=${DESTDIR} DISTRO="
-    
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing apparmor..."
-  post_install: |
-    echo "apparmor installed successfully"
-  pre_uninstall: |
-    echo "Removing apparmor..."
-  post_uninstall: |
-    echo "apparmor removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "apparmor"
-  conflicts: []
-
+bootstrap:
+  enabled: false
+changelog:
+- version: 4.1.2
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

@@ -1,92 +1,36 @@
 name: iproute2
-version: "6.17.0"
-description: "IP routing utilities"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-6.7.0.tar.xz"
-keywords:
-  - iproute2
-categories:
-  - packages
-
-dependencies:
-  build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "bison", version_constraint: ">=3.8", optional: false}
-    - {name: "flex", version_constraint: ">=2.6", optional: false}
-    - {name: "libbpf-devel", version_constraint: ">=1.2", optional: false}
-    - {name: "libcap-devel", version_constraint: ">=2.70", optional: false}
-    - {name: "libmnl-devel", version_constraint: ">=1.0", optional: false}
-    - {name: "libselinux-devel", version_constraint: ">=3.7", optional: false}
-    - {name: "iptables-devel", version_constraint: ">=1.4.5", optional: false}
-    - {name: "elfutils-libelf-devel", version_constraint: ">=0.188", optional: false}
-    - {name: "pkgconf", version_constraint: ">=1.7", optional: false}
-    - {name: "linux-atm-libs-devel", version_constraint: null, optional: true}
-  runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
+version: 6.17.0
+description: IP routing utilities
+license: Various
+homepage: ''
+source_url: https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-6.7.0.tar.xz
 build:
   build_system: Make
   build_commands:
-    - "make V=1"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing iproute2..."
-  post_install: |
-    echo "iproute2 installed successfully"
-  pre_uninstall: |
-    echo "Removing iproute2..."
-  post_uninstall: |
-    echo "iproute2 removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "iproute2"
-  conflicts: []
+  - make V=1
+dependencies:
+  build_dependencies:
+  - gcc
+  - make
+  - bison
+  - flex
+  - pkgconf
+  host_dependencies:
+  - libbpf-devel
+  - libcap-devel
+  - libmnl-devel
+  - libselinux-devel
+  - iptables-devel
+  - elfutils-libelf-devel
+  - linux-atm-libs-devel
+  runtime_dependencies:
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 6.17.0
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

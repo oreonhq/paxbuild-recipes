@@ -1,129 +1,31 @@
 name: expat
-version: "2.6.4"
-description: "Fast streaming XML parser written in C"
-author: "Expat development team"
-license: "MIT"
-homepage: "https://libexpat.github.io/"
-repository: "https://github.com/libexpat/libexpat"
-source_url: "https://github.com/libexpat/libexpat/releases/download/R_2_6_3/expat-2.6.3.tar.xz"
-keywords:
-  - xml
-  - parser
-  - library
-categories:
-  - libraries
-  - parsers
-
+version: 2.6.4
+description: Fast streaming XML parser written in C
+license: MIT
+homepage: https://libexpat.github.io/
+source_url: https://github.com/libexpat/libexpat/releases/download/R_2_6_3/expat-2.6.3.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --libdir=/usr/lib --disable-static --without-docbook
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "autoconf"
-      version_constraint: ">=2.71"
-      optional: false
-    - name: "libtool"
-      version_constraint: ">=2.4"
-      optional: false
-    - name: "xmlto"
-      version_constraint: null
-      optional: false
-    - name: "gnupg2"
-      version_constraint: ">=2.4"
-      optional: false
+  - gcc
+  - make
+  - autoconf
+  - libtool
+  - xmlto
+  - gnupg2
+  host_dependencies: []
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --libdir=/usr/lib --disable-static --without-docbook"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "autoconf"
-    - "libtool"
-    - "xmlto"
-    - "gnupg2"
-  build_flags:
-    - "-O2"
-    - "-pipe"
-  environment:
-    CFLAGS: "-O2 -pipe -Wall"
-    LDFLAGS: "-Wl,-z,relro -Wl,-z,now"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/lib"
-    - "/usr/include"
-    - "/usr/bin"
-  install_files: []
-  post_install_commands:
-    - "ldconfig -n $DESTDIR/usr/lib"
-
-files:
-  include_patterns:
-    - "lib/**/*.c"
-    - "lib/**/*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.lo"
-    - "**/.libs/**"
-    - ".git/**/*"
-    - "doc/**/*"
-    - "**/*.pyc"
-  binary_files:
-    - "usr/lib/libexpat.so*"
-    - "usr/bin/xmlwf"
-  config_files: []
-  documentation_files:
-    - "usr/share/man/**/*"
-    - "usr/share/doc/expat/**/*"
-  license_files:
-    - "COPYING"
-
-scripts:
-  pre_install: |
-    echo "Installing expat..."
-  post_install: |
-    echo "expat installed successfully"
-    ldconfig 2>/dev/null || true
-    echo "XML parser library is now available"
-  pre_uninstall: |
-    echo "Removing expat..."
-  post_uninstall: |
-    echo "expat removed successfully"
-    ldconfig 2>/dev/null || true
-  pre_upgrade: null
-  post_upgrade: |
-    echo "expat upgraded successfully"
-    ldconfig 2>/dev/null || true
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "libraries"
-  priority: "required"
-  provides:
-    - "expat"
-    - "libexpat.so.1"
-  conflicts: []
-
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 2.6.4
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

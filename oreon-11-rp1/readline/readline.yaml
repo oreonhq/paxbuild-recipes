@@ -1,99 +1,30 @@
 name: readline
-version: "8.2.13"
-description: "Readline library"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://ftp.gnu.org/gnu/readline/readline-8.2.13.tar.gz"
-keywords:
-  - readline
-categories:
-  - packages
-
+version: 8.2.13
+description: Readline library
+license: Various
+homepage: ''
+source_url: https://ftp.gnu.org/gnu/readline/readline-8.2.13.tar.gz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --disable-static
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "ncurses-devel"
-      version_constraint: ">=6.5"
-      optional: false
-    - name: "gnupg2"
-      version_constraint: ">=2.4"
-      optional: false
+  - gcc
+  - make
+  - gnupg2
+  host_dependencies:
+  - ncurses-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "ncurses", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --disable-static"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "ncurses-devel"
-    - "gnupg2"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing readline..."
-  post_install: |
-    echo "readline installed successfully"
-  pre_uninstall: |
-    echo "Removing readline..."
-  post_uninstall: |
-    echo "readline removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "readline"
-  conflicts: []
+  - glibc
+  - ncurses
+bootstrap:
+  enabled: false
+changelog:
+- version: 8.2.13
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

@@ -1,191 +1,20 @@
 name: konsole
 version: 25.08.3
 description: Konsole terminal emulator
-author: KDE Community
 license: GPL-2.0-or-later
 homepage: https://kde.org/
-repository: ''
 source_url: https://download.kde.org/stable/release-service/25.08.3/src/konsole-25.08.3.tar.xz
-keywords:
-- konsole
-- kde
-- plasma
-categories:
-- desktop
-- kde
-dependencies:
-  build_dependencies:
-  - name: cmake
-    version_constraint: '>=3.16'
-    optional: false
-  - name: extra-cmake-modules
-    version_constraint: '>=6.0'
-    optional: false
-  - name: gcc-c++
-    version_constraint: '>=11'
-    optional: false
-  - name: kf6-kconfig-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kcoreaddons-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kiconthemes-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kio-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-ktextwidgets-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kxmlgui-devel
-    version_constraint: null
-    optional: false
-  - name: qt6-qtbase-devel
-    version_constraint: '>=6.7'
-    optional: false
-  - name: qt6-qtmultimedia-devel
-    version_constraint: '>=6.7'
-    optional: false
-  - name: kf6-kconfigwidgets-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-knotifications-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kservice-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kwindowsystem-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kbookmarks-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kcrash-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kguiaddons-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-ki18n-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-knewstuff-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-knotifyconfig-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kparts-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kwidgetsaddons-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kpty-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kdbusaddons-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kglobalaccel-devel
-    version_constraint: null
-    optional: false
-  - name: libicu-devel
-    version_constraint: null
-    optional: false
-  - name: kf6-kdoctools-devel
-    version_constraint: null
-    optional: false
-  runtime_dependencies:
-  - name: glibc
-    version_constraint: '>=2.30'
-    optional: false
-  - name: libicu
-    version_constraint: null
-    optional: false
-  - name: kf6-kconfig
-    version_constraint: null
-    optional: false
-  - name: kf6-kcoreaddons
-    version_constraint: null
-    optional: false
-  - name: kf6-kiconthemes
-    version_constraint: null
-    optional: false
-  - name: kf6-kio
-    version_constraint: null
-    optional: false
-  - name: kf6-ktextwidgets
-    version_constraint: null
-    optional: false
-  - name: kf6-kxmlgui
-    version_constraint: null
-    optional: false
-  - name: qt6-qtbase
-    version_constraint: '>=6.7'
-    optional: false
-  - name: qt6-qtmultimedia
-    version_constraint: '>=6.7'
-    optional: false
-  - name: kf6-kconfigwidgets
-    version_constraint: null
-    optional: false
-  - name: kf6-knotifications
-    version_constraint: null
-    optional: false
-  - name: kf6-kservice
-    version_constraint: null
-    optional: false
-  - name: kf6-kwindowsystem
-    version_constraint: null
-    optional: false
-  - name: kf6-kbookmarks
-    version_constraint: null
-    optional: false
-  - name: kf6-kcrash
-    version_constraint: null
-    optional: false
-  - name: kf6-kguiaddons
-    version_constraint: null
-    optional: false
-  - name: kf6-ki18n
-    version_constraint: null
-    optional: false
-  - name: kf6-knewstuff
-    version_constraint: null
-    optional: false
-  - name: kf6-knotifyconfig
-    version_constraint: null
-    optional: false
-  - name: kf6-kparts
-    version_constraint: null
-    optional: false
-  - name: kf6-kwidgetsaddons
-    version_constraint: null
-    optional: false
-  - name: kf6-kpty
-    version_constraint: null
-    optional: false
-  - name: kf6-kdbusaddons
-    version_constraint: null
-    optional: false
-  - name: kf6-kglobalaccel
-    version_constraint: null
-    optional: false
-  optional_dependencies: []
-  conflicts: []
 build:
   build_system: Make
   build_commands:
   - cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
-  - cmake --build build -j$(nproc)
+  - cmake --build build
+dependencies:
   build_dependencies:
   - cmake
   - extra-cmake-modules
   - gcc-c++
+  host_dependencies:
   - kf6-kconfig-devel
   - kf6-kcoreaddons-devel
   - kf6-kiconthemes-devel
@@ -211,54 +40,38 @@ build:
   - kf6-kglobalaccel-devel
   - libicu-devel
   - kf6-kdoctools-devel
-  build_flags: []
-  environment:
-    CXXFLAGS: -O2 -pipe
-  working_directory: null
-  target_architectures:
-  - X86_64v1
-  - X86_64v3
-  - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-install:
-  install_method: RunCommands
-  install_commands:
-  - DESTDIR=$DESTDIR cmake --install build
-  install_directories:
-  - /usr/lib
-  - /usr/bin
-  - /usr/share
-  install_files: []
-  post_install_commands:
-  - ldconfig -n $DESTDIR/usr/lib || true
-files:
-  include_patterns:
-  - '**/*.cpp'
-  - '**/*.h'
-  - CMakeLists.txt
-  exclude_patterns:
-  - '**/*.o'
-  - build/**
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-scripts:
-  pre_install: echo 'Installing konsole...'
-  post_install: 'echo ''konsole installed''
-
-    ldconfig 2>/dev/null || true
-
-    '
-  pre_uninstall: null
-  post_uninstall: ldconfig 2>/dev/null || true
-  pre_upgrade: null
-  post_upgrade: ldconfig 2>/dev/null || true
-metadata:
-  maintainer: Oreon Project Team <packaging@oreonproject.org>
-  section: desktop
-  priority: optional
-  provides:
-  - konsole
-  conflicts: []
+  runtime_dependencies:
+  - glibc
+  - libicu
+  - kf6-kconfig
+  - kf6-kcoreaddons
+  - kf6-kiconthemes
+  - kf6-kio
+  - kf6-ktextwidgets
+  - kf6-kxmlgui
+  - qt6-qtbase
+  - qt6-qtmultimedia
+  - kf6-kconfigwidgets
+  - kf6-knotifications
+  - kf6-kservice
+  - kf6-kwindowsystem
+  - kf6-kbookmarks
+  - kf6-kcrash
+  - kf6-kguiaddons
+  - kf6-ki18n
+  - kf6-knewstuff
+  - kf6-knotifyconfig
+  - kf6-kparts
+  - kf6-kwidgetsaddons
+  - kf6-kpty
+  - kf6-kdbusaddons
+  - kf6-kglobalaccel
+bootstrap:
+  enabled: false
+changelog:
+- version: 25.08.3
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

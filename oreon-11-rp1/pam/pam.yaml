@@ -1,167 +1,52 @@
 name: pam
-version: "1.6.1"
-description: "Pluggable Authentication Modules for Linux"
-author: "Linux-PAM Project"
-license: "BSD-3-Clause OR GPL-2.0"
-homepage: "http://www.linux-pam.org/"
-repository: "https://github.com/linux-pam/linux-pam"
-source_url: "https://github.com/linux-pam/linux-pam/releases/download/v1.6.1/Linux-PAM-1.6.1.tar.xz"
-keywords:
-  - pam
-  - authentication
-  - security
-  - login
-categories:
-  - security
-  - system
-
+version: 1.6.1
+description: Pluggable Authentication Modules for Linux
+license: BSD-3-Clause OR GPL-2.0
+homepage: http://www.linux-pam.org/
+source_url: https://github.com/linux-pam/linux-pam/releases/download/v1.6.1/Linux-PAM-1.6.1.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin --sysconfdir=/etc --enable-securedir=/usr/lib/security --enable-doc --with-audit --with-selinux --with-libeconf --with-libxcrypt
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "bison", version_constraint: ">=3.8", optional: false}
-    - {name: "flex", version_constraint: ">=2.6", optional: false}
-    - {name: "autoconf", version_constraint: ">=2.71", optional: false}
-    - {name: "automake", version_constraint: ">=1.16", optional: false}
-    - {name: "libtool", version_constraint: ">=2.4", optional: false}
-    - {name: "gettext-devel", version_constraint: ">=0.21", optional: false}
-    - {name: "libeconf-devel", version_constraint: ">=0.6", optional: false}
-    - {name: "libnsl2-devel", version_constraint: ">=1.3", optional: false}
-    - {name: "libselinux-devel", version_constraint: ">=3.7", optional: false}
-    - {name: "libtirpc-devel", version_constraint: ">=1.3", optional: false}
-    - {name: "libxcrypt-devel", version_constraint: ">=4.4", optional: false}
-    - {name: "audit-libs-devel", version_constraint: ">=3.1", optional: false}
-    - {name: "meson", version_constraint: ">=1.2", optional: false}
-    - {name: "openssl-devel", version_constraint: ">=3.0", optional: false}
-    - {name: "pkgconf", version_constraint: ">=1.7", optional: false}
-    - {name: "python3", version_constraint: ">=3.11", optional: false}
-    - {name: "perl-interpreter", version_constraint: ">=5.32", optional: false}
-    - {name: "docbook5-schemas", version_constraint: null, optional: false}
-    - {name: "docbook5-style-xsl", version_constraint: null, optional: false}
-    - {name: "elinks", version_constraint: null, optional: false}
-    - {name: "fop", version_constraint: null, optional: false}
-    - {name: "libxslt", version_constraint: ">=1.1", optional: false}
-    - {name: "linuxdoc-tools", version_constraint: null, optional: false}
-    - {name: "systemd", version_constraint: ">=254", optional: false}
+  - gcc
+  - make
+  - bison
+  - flex
+  - autoconf
+  - automake
+  - libtool
+  - meson
+  - pkgconf
+  - python3
+  - perl-interpreter
+  - docbook5-schemas
+  - docbook5-style-xsl
+  - elinks
+  - fop
+  - libxslt
+  - linuxdoc-tools
+  - systemd
+  host_dependencies:
+  - gettext-devel
+  - libeconf-devel
+  - libnsl2-devel
+  - libselinux-devel
+  - libtirpc-devel
+  - libxcrypt-devel
+  - audit-libs-devel
+  - openssl-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-    - {name: "libcap", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin --sysconfdir=/etc --enable-securedir=/usr/lib/security --enable-doc --with-audit --with-selinux --with-libeconf --with-libxcrypt"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "flex"
-    - "bison"
-    - "autoconf"
-    - "automake"
-    - "libtool"
-    - "gettext-devel"
-    - "libeconf-devel"
-    - "libnsl2-devel"
-    - "libselinux-devel"
-    - "libtirpc-devel"
-    - "libxcrypt-devel"
-    - "audit-libs-devel"
-    - "meson"
-    - "openssl-devel"
-    - "pkgconf"
-    - "python3"
-    - "perl-interpreter"
-    - "docbook5-schemas"
-    - "docbook5-style-xsl"
-    - "elinks"
-    - "fop"
-    - "libxslt"
-    - "linuxdoc-tools"
-    - "systemd"
-  build_flags:
-    - "-O2"
-    - "-pipe"
-  environment:
-    CFLAGS: "-O2 -pipe -Wall"
-    LDFLAGS: "-Wl,-z,relro -Wl,-z,now"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-    - "mkdir -p $DESTDIR/etc/pam.d"
-    - "chmod 755 $DESTDIR/usr/sbin/unix_chkpwd"
-    - "chmod 4755 $DESTDIR/usr/sbin/unix_chkpwd"
-  install_directories:
-    - "/usr/lib"
-    - "/usr/lib/security"
-    - "/usr/sbin"
-    - "/etc/pam.d"
-  install_files: []
-  post_install_commands:
-    - "ldconfig -n $DESTDIR/usr/lib"
-
-files:
-  include_patterns:
-    - "modules/**/*.c"
-    - "libpam/**/*.c"
-    - "**/*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.lo"
-    - "**/.libs/**"
-    - ".git/**/*"
-    - "doc/**/*"
-  binary_files:
-    - "usr/lib/libpam.so*"
-    - "usr/lib/libpam_misc.so*"
-    - "usr/lib/libpamc.so*"
-    - "usr/lib/security/*.so"
-    - "usr/sbin/unix_chkpwd"
-    - "usr/sbin/unix_update"
-  config_files:
-    - "/etc/security/*"
-    - "/etc/pam.d/*"
-  documentation_files: []
-  license_files:
-    - "COPYING"
-    - "Copyright"
-
-scripts:
-  pre_install: |
-    echo "Installing PAM..."
-  post_install: |
-    echo "PAM installed successfully"
-    ldconfig 2>/dev/null || true
-    echo "Pluggable Authentication Modules are now available"
-    echo "Configure /etc/pam.d/ for your services"
-  pre_uninstall: |
-    echo "Removing PAM..."
-  post_uninstall: |
-    ldconfig 2>/dev/null || true
-  pre_upgrade: null
-  post_upgrade: |
-    ldconfig 2>/dev/null || true
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "system"
-  priority: "required"
-  provides:
-    - "pam"
-    - "libpam.so.0"
-  conflicts: []
-
+  - glibc
+  - libcap
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.6.1
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

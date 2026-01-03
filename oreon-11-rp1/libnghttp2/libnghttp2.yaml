@@ -1,128 +1,35 @@
 name: libnghttp2
-version: "1.61.0"
-description: "HTTP/2 C library"
-author: "Tatsuhiro Tsujikawa"
-license: "MIT"
-homepage: "https://nghttp2.org/"
-repository: "https://github.com/nghttp2/nghttp2.git"
-source_url: "https://github.com/nghttp2/nghttp2/releases/download/v1.61.0/nghttp2-1.61.0.tar.xz"
-keywords:
-  - nghttp2
-  - http2
-categories:
-  - libraries
-
+version: 1.61.0
+description: HTTP/2 C library
+license: MIT
+homepage: https://nghttp2.org/
+source_url: https://github.com/nghttp2/nghttp2/releases/download/v1.61.0/nghttp2-1.61.0.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --enable-lib-only
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=11"
-      optional: false
-    - name: "gcc-c++"
-      version_constraint: ">=11"
-      optional: false
-    - name: "make"
-      version_constraint: ">=4.3"
-      optional: false
-    - name: "pkgconf"
-      version_constraint: ">=1.7"
-      optional: false
-    - name: "zlib-devel"
-      version_constraint: ">=1.2"
-      optional: false
-    - name: "c-ares-devel"
-      version_constraint: ">=1.19"
-      optional: false
-    - name: "libev-devel"
-      version_constraint: ">=4.33"
-      optional: false
-    - name: "libxml2-devel"
-      version_constraint: ">=2.9"
-      optional: false
-    - name: "openssl-devel"
-      version_constraint: ">=3.0"
-      optional: false
-    - name: "python3-devel"
-      version_constraint: ">=3.11"
-      optional: false
+  - gcc
+  - gcc-c++
+  - make
+  - pkgconf
+  host_dependencies:
+  - zlib-devel
+  - c-ares-devel
+  - libev-devel
+  - libxml2-devel
+  - openssl-devel
+  - python3-devel
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --enable-lib-only"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "gcc-c++"
-    - "make"
-    - "pkgconf"
-    - "zlib-devel"
-    - "c-ares-devel"
-    - "libev-devel"
-    - "libxml2-devel"
-    - "openssl-devel"
-    - "python3-devel"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install DESTDIR=$DESTDIR"
-  install_directories:
-    - "/usr/lib"
-    - "/usr/include"
-    - "/usr/lib/pkgconfig"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "lib/**/*.c"
-    - "lib/**/*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files:
-    - "usr/lib/libnghttp2.so*"
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing libnghttp2..."
-  post_install: |
-    echo "libnghttp2 installed successfully"
-  pre_uninstall: |
-    echo "Removing libnghttp2..."
-  post_uninstall: |
-    echo "libnghttp2 removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "libs"
-  priority: "optional"
-  provides:
-    - "libnghttp2"
-  conflicts: []
-
-
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 1.61.0
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

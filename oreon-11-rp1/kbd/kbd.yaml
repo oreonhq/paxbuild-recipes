@@ -1,90 +1,27 @@
 name: kbd
-version: "2.9.0"
-description: "Linux console tools"
-author: "Various"
-license: "Various"
-homepage: ""
-repository: ""
-source_url: "https://www.kernel.org/pub/linux/utils/kbd/kbd-2.9.0.tar.xz"
-keywords:
-  - kbd
-categories:
-  - packages
-
+version: 2.9.0
+description: Linux console tools
+license: Various
+homepage: ''
+source_url: https://www.kernel.org/pub/linux/utils/kbd/kbd-2.9.0.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --disable-vlock
+  - make
 dependencies:
   build_dependencies:
-    - name: "gcc"
-      version_constraint: ">=4.0"
-      optional: false
-    - name: "make"
-      version_constraint: ">=3.0"
-      optional: false
+  - gcc
+  - make
+  host_dependencies: []
   runtime_dependencies:
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --disable-vlock"
-    - "make"
-  build_dependencies:
-    - "gcc"
-    - "make"
-  build_flags: []
-  environment:
-    CFLAGS: "-O2"
-  working_directory: null
-  target_architectures:
-    - X86_64v1
-    - X86_64v3
-    - Aarch64
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands:
-    - "make install"
-  install_directories:
-    - "/usr/bin"
-  install_files: []
-  post_install_commands: []
-
-files:
-  include_patterns:
-    - "*.c"
-    - "*.h"
-    - "configure"
-    - "Makefile.in"
-  exclude_patterns:
-    - "**/*.o"
-    - "**/*.a"
-    - "tests/**/*"
-    - ".git/**/*"
-  binary_files: []
-  config_files: []
-  documentation_files: []
-  license_files: []
-
-scripts:
-  pre_install: |
-    echo "Installing kbd..."
-  post_install: |
-    echo "kbd installed successfully"
-  pre_uninstall: |
-    echo "Removing kbd..."
-  post_uninstall: |
-    echo "kbd removed successfully"
-  pre_upgrade: null
-  post_upgrade: null
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "packages"
-  priority: "optional"
-  provides:
-    - "kbd"
-  conflicts: []
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 2.9.0
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11

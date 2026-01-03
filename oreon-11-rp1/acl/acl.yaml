@@ -1,81 +1,34 @@
 name: acl
-version: "2.3.2"
-description: "Access control list utilities, libraries and headers"
-author: "SGI"
-license: "LGPL-2.1-or-later"
-homepage: "https://savannah.nongnu.org/projects/acl"
-repository: "https://git.savannah.nongnu.org/git/acl.git"
-source_url: "https://mirrors.kernel.org/slackware/slackware-current/source/a/acl/acl-2.3.2.tar.xz"
-keywords: [acl, access-control, filesystem]
-categories: [system, utilities]
-
+version: 2.3.2
+description: Access control list utilities, libraries and headers
+license: LGPL-2.1-or-later
+homepage: https://savannah.nongnu.org/projects/acl
+source_url: https://mirrors.kernel.org/slackware/slackware-current/source/a/acl/acl-2.3.2.tar.xz
+build:
+  build_system: Autotools
+  build_commands:
+  - ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --disable-static
+  - make
 dependencies:
   build_dependencies:
-    - {name: "gcc", version_constraint: ">=11", optional: false}
-    - {name: "make", version_constraint: ">=4.3", optional: false}
-    - {name: "gettext", version_constraint: ">=0.21", optional: false}
-    - {name: "libtool", version_constraint: ">=2.4", optional: false}
-    - {name: "libattr-devel", version_constraint: ">=2.5", optional: false}
-    - {name: "gawk", version_constraint: ">=5.1", optional: false}
-    - {name: "gnupg2", version_constraint: ">=2.4", optional: false}
-    - {name: "perl-FileHandle", version_constraint: ">=2.03", optional: false}
+  - gcc
+  - make
+  - gettext
+  - libtool
+  - gawk
+  - gnupg2
+  - perl-FileHandle
+  host_dependencies:
+  - libattr-devel
   runtime_dependencies:
-    - {name: "attr", version_constraint: null, optional: false}
-    - {name: "glibc", version_constraint: null, optional: false}
-
-  optional_dependencies: []
-  conflicts: []
-
-build:
-  build_system: Make
-  build_commands:
-    - "./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --disable-static"
-    - "make -j$(nproc)"
-  build_dependencies:
-    - "gcc"
-    - "make"
-    - "gettext"
-    - "libtool"
-    - "libattr-devel"
-    - "gawk"
-    - "gnupg2"
-    - "perl-FileHandle"
-  build_flags: ["-O2"]
-  environment: {CFLAGS: "-O2"}
-  working_directory: null
-  target_architectures: [X86_64v1, X86_64v3, Aarch64]
-  cross_compiler_prefix: null
-  target_sysroot: null
-
-install:
-  install_method: RunCommands
-  install_commands: ["make install DESTDIR=$DESTDIR"]
-  install_directories: ["/usr/bin", "/usr/lib"]
-  install_files: []
-  post_install_commands: ["ldconfig -n $DESTDIR/usr/lib"]
-
-files:
-  include_patterns: ["**/*.c", "configure"]
-  exclude_patterns: ["**/*.o", "**/.libs/**"]
-  binary_files: ["usr/bin/chacl", "usr/bin/getfacl", "usr/bin/setfacl", "usr/lib/libacl.so*"]
-  config_files: []
-  documentation_files: []
-  license_files: ["COPYING", "COPYING.LGPL"]
-
-scripts:
-  pre_install: "echo 'Installing acl...'"
-  post_install: |
-    echo "acl installed"
-    ldconfig 2>/dev/null || true
-  pre_uninstall: null
-  post_uninstall: "ldconfig 2>/dev/null || true"
-  pre_upgrade: null
-  post_upgrade: "ldconfig 2>/dev/null || true"
-
-metadata:
-  maintainer: "Oreon Project Team <packaging@oreonproject.org>"
-  section: "system"
-  priority: "required"
-  provides: ["acl", "libacl.so.1"]
-  conflicts: []
-
+  - attr
+  - glibc
+bootstrap:
+  enabled: false
+changelog:
+- version: 2.3.2
+  date: '2026-01-03'
+  author: Oreon Project Team
+  email: packaging@oreonproject.org
+  changes:
+  - Initial package for Oreon 11
